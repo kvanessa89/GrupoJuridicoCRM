@@ -1,0 +1,200 @@
+.clients-page {
+  padding: 22px 26px 30px;
+}
+
+@media (max-width: 759px) {
+  .clients-page {
+    padding: 16px 14px 24px;
+  }
+}
+
+.clients-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.clients-search {
+  position: relative;
+  flex: 1;
+  max-width: 340px;
+}
+
+.clients-search svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.clients-search input {
+  width: 100%;
+  padding: 10px 12px 10px 36px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  font-size: 13.5px;
+  background: var(--color-surface);
+}
+
+.clients-count {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.clients-table {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.clients-table-head {
+  display: flex;
+  align-items: center;
+  padding: 12px 18px;
+  background: #f8fafc;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.clients-row {
+  display: flex;
+  align-items: center;
+  padding: 13px 18px;
+  border-top: 1px solid var(--color-border-faint);
+  font-size: 13.5px;
+  cursor: pointer;
+}
+
+.clients-row:hover {
+  background: #f8fafc;
+}
+
+.col-cliente {
+  flex: 2.2;
+  min-width: 0;
+}
+
+.col-contacto {
+  flex: 2;
+  min-width: 0;
+  color: var(--color-text-muted);
+}
+
+.col-origen {
+  flex: 1.2;
+  min-width: 0;
+}
+
+.col-etapa {
+  flex: 1.4;
+  min-width: 0;
+}
+
+.col-asesor {
+  flex: 1.2;
+  min-width: 0;
+}
+
+.col-delete {
+  width: 36px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 759px) {
+  .col-contacto,
+  .col-origen,
+  .col-asesor {
+    display: none;
+  }
+
+  /* .clients-row-owner sets display:flex with equal specificity later in
+     this file, so it wins the cascade tie unless targeted explicitly here. */
+  .col-asesor.clients-row-owner {
+    display: none;
+  }
+}
+
+.clients-row-main {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+.clients-row-main-text {
+  min-width: 0;
+}
+
+.clients-row-name {
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clients-row-ingreso {
+  font-size: 11.5px;
+  color: var(--color-text-faint);
+  font-weight: 600;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.clients-row-email {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clients-row-phone {
+  font-size: 12px;
+  color: var(--color-text-faint);
+}
+
+.clients-row-owner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.clients-row-owner span {
+  font-size: 12.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clients-row-delete-icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: var(--color-text-faint);
+}
+
+.clients-row-delete-icon:hover {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.clients-empty {
+  padding: 40px;
+  text-align: center;
+  color: var(--color-text-faint);
+  font-size: 14px;
+}

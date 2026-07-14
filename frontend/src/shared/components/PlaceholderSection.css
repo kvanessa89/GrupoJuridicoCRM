@@ -1,0 +1,13 @@
+.placeholder-section {
+  padding: 26px;
+}
+
+.placeholder-section-card {
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 14px;
+}

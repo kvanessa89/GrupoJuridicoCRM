@@ -1,0 +1,54 @@
+.user-modal-avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.user-modal-colors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.user-modal-color {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.user-modal-color--selected {
+  border-color: var(--color-text);
+  box-shadow: 0 0 0 2px var(--color-surface);
+}
+
+.user-password-wrap {
+  position: relative;
+}
+
+.user-password-wrap .form-input {
+  padding-right: 40px;
+}
+
+.user-password-toggle {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--color-text-faint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.user-password-toggle:hover {
+  background: var(--color-border-faint);
+}

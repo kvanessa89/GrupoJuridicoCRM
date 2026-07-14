@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0}
+    @keyframes ccfade{from{opacity:0}to{opacity:1}}
+    @keyframes ccpop{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+    ::-webkit-scrollbar{height:10px;width:10px}
+    ::-webkit-scrollbar-thumb{background:#CBD5E1;border-radius:9px;border:2px solid transparent;background-clip:content-box}
+    ::-webkit-scrollbar-thumb:hover{background:#94A3B8;background-clip:content-box}
+    ::-webkit-scrollbar-track{background:transparent}
+    input,select,button{font-family:inherit}
+    input:focus,select:focus{outline:none}
+  </style>
+</helmet>
+
+<div style="font-family:'Manrope',system-ui,-apple-system,sans-serif;height:100vh;width:100%;color:#0F172A;background:#F4F6FA;-webkit-font-smoothing:antialiased">
+
+  <!-- ============ LOGIN ============ -->
+  <sc-if value="{{ showLogin }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;height:100vh;width:100%">
+      <sc-if value="{{ showLoginAside }}" hint-placeholder-val="{{ true }}">
+      <div style="flex:1;min-width:0;background:linear-gradient(90deg,rgba(11,18,32,.94),rgba(11,18,32,.78) 55%,rgba(11,18,32,.42)),url(login-aside-bg.png);background-size:cover;background-position:center;color:#fff;padding:56px 56px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden">
+        <div style="display:flex;align-items:center;gap:16px;position:relative;z-index:1">
+          <div style="width:96px;height:96px;border-radius:50%;overflow:hidden;flex-shrink:0;box-shadow:0 8px 24px rgba(0,0,0,.5)">
+            <img src="logo-grupo-juridico.png" alt="Grupo Jurídico" style="width:100%;height:100%;object-fit:cover;display:block">
+          </div>
+          <div>
+            <div style="font-size:28px;font-weight:800;letter-spacing:-.02em">Grupo Jurídico CRM</div>
+            <div style="width:36px;height:3px;background:#AC740E;margin:8px 0 8px"></div>
+            <div style="font-size:14.5px;color:#9FB0CC">Gestión legal con orden y precisión</div>
+          </div>
+        </div>
+        <div style="max-width:440px;position:relative;z-index:1">
+          <h1 style="font-size:40px;line-height:1.15;font-weight:800;letter-spacing:-.03em;margin:0 0 14px;font-family:Georgia,'Times New Roman',serif">Cada cliente en su lugar, de la primera llamada al cierre.</h1>
+          <div style="width:48px;height:3px;background:#AC740E;margin-bottom:16px"></div>
+          <p style="font-size:16px;line-height:1.6;color:#9FB0CC;margin:0">Organiza a tus clientes por etapa, arrástralos por el tablero y dale a tu equipo una sola fuente de verdad.</p>
+        </div>
+        <div></div>
+      </div>
+      </sc-if>
+
+      <div style="{{ loginFormStyle }}">
+        <div style="max-width:400px;width:100%;margin:0 auto">
+          <div style="width:44px;height:44px;border-radius:50%;background:#FBF0DD;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#AC740E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.3 8 10 4.6-1.7 8-5 8-10V5l-8-3Z"/></svg>
+          </div>
+          <h2 style="font-size:23px;font-weight:800;letter-spacing:-.02em;margin:0 0 4px;text-align:center;font-family:Georgia,'Times New Roman',serif;color:#0B1220">Bienvenido de nuevo</h2>
+          <p style="font-size:13.5px;color:#64748B;margin:0 0 20px;text-align:center">Inicia sesión para continuar</p>
+
+          <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:7px">Correo electrónico</label>
+          <div style="position:relative;margin-bottom:16px">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:14px;top:50%;transform:translateY(-50%)"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            <input value="{{ loginEmail }}" readonly style="width:100%;padding:12px 14px 12px 40px;border:1px solid #E2E8F0;border-radius:10px;font-size:14px;color:#0F172A;background:#F8FAFC">
+          </div>
+          <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:7px">Contraseña</label>
+          <div style="position:relative;margin-bottom:20px">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:14px;top:50%;transform:translateY(-50%)"><rect x="4" y="10.5" width="16" height="10" rx="2"/><path d="M7.5 10.5V7a4.5 4.5 0 0 1 9 0v3.5"/></svg>
+            <input type="password" value="demodemodemo" readonly style="width:100%;padding:12px 40px 12px 40px;border:1px solid #E2E8F0;border-radius:10px;font-size:14px;color:#0F172A;background:#F8FAFC">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;right:14px;top:50%;transform:translateY(-50%)"><path d="M1.5 12S5 5 12 5s10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:#475569">
+              <input type="checkbox" style="width:15px;height:15px;accent-color:#AC740E">Recordarme
+            </label>
+            <span style="font-size:13px;color:#AC740E;font-weight:600;cursor:default">¿Olvidaste tu contraseña?</span>
+          </div>
+
+          <div style="font-size:12.5px;font-weight:700;color:#475569;margin-bottom:10px">Entorno de demostración — elige un perfil</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:24px">
+            <sc-for list="{{ loginProfiles }}" as="p" hint-placeholder-count="4">
+              <div onClick="{{ p.onPick }}" style="{{ p.style }}">
+                <div style="{{ p.avatar }}">{{ p.initials }}</div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:14px;font-weight:700;color:#0F172A">{{ p.name }}</div>
+                  <div style="font-size:12px;color:#64748B">{{ p.title }}</div>
+                </div>
+                <span style="{{ p.badge }}">{{ p.roleLabel }}</span>
+              </div>
+            </sc-for>
+          </div>
+
+          <button onClick="{{ onLogin }}" style="{{ loginBtnStyle }}">
+            <span>Iniciar sesión</span>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </button>
+
+          <div style="display:flex;align-items:center;justify-content:center;gap:7px;margin-top:20px;color:#94A3B8;font-size:12.5px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.3 8 10 4.6-1.7 8-5 8-10V5l-8-3Z"/></svg>
+            Acceso seguro y protegido
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ============ APP ============ -->
+  <sc-if value="{{ showApp }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;height:100vh;width:100%">
+
+      <sc-if value="{{ sidebarOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeSidebar }}" style="position:fixed;inset:0;background:rgba(12,20,36,.5);z-index:55"></div>
+      </sc-if>
+
+      <!-- Sidebar -->
+      <aside style="{{ sidebarStyle }}">
+        <div style="display:flex;align-items:center;gap:11px;padding:6px 8px 22px">
+          <span style="font-size:17px;font-weight:800;letter-spacing:-.02em">Grupo Jurídico CRM</span>
+        </div>
+
+        <nav style="display:flex;flex-direction:column;gap:4px;flex:1">
+          <sc-if value="{{ showWorkspaceNav }}" hint-placeholder-val="{{ true }}">
+          <div onClick="{{ nav.dashboard.onClick }}" style="{{ nav.dashboard.style }}" style-hover="{{ nav.dashboard.hover }}">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg>
+            <span>Panel</span>
+          </div>
+          <div onClick="{{ nav.board.onClick }}" style="{{ nav.board.style }}" style-hover="{{ nav.board.hover }}">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="9.5" y="4" width="5" height="11" rx="1.5"/><rect x="16" y="4" width="5" height="14" rx="1.5"/></svg>
+            <span>Tablero</span>
+          </div>
+          </sc-if>
+          <div onClick="{{ nav.clients.onClick }}" style="{{ nav.clients.style }}" style-hover="{{ nav.clients.hover }}">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 19v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="3.2"/><path d="M22 19v-2a4 4 0 0 0-3-3.85"/><path d="M16 3.6A4 4 0 0 1 16 11"/></svg>
+            <span>Clientes</span>
+          </div>
+          <sc-if value="{{ showUsersNav }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ nav.users.onClick }}" style="{{ nav.users.style }}" style-hover="{{ nav.users.hover }}">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.3 8 10 4.6-1.7 8-5 8-10V5l-8-3Z"/><circle cx="12" cy="10" r="2.2"/><path d="M8.5 16c.6-1.6 2-2.4 3.5-2.4s2.9.8 3.5 2.4"/></svg>
+              <span>Usuarios</span>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ nav.config.onClick }}" style="{{ nav.config.style }}" style-hover="{{ nav.config.hover }}">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2.2" fill="#0A0A0A"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2.2" fill="#0A0A0A"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="18" r="2.2" fill="#0A0A0A"/></svg>
+              <span>Config. del tablero</span>
+            </div>
+          </sc-if>
+        </nav>
+
+        <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:14px;margin-top:8px">
+          <div style="display:flex;align-items:center;gap:10px;padding:4px 6px">
+            <div style="{{ me.avatarStyle }}">{{ me.initials }}</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:13.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ me.name }}</div>
+              <div style="font-size:11.5px;color:#8398BC">{{ me.roleLabel }}</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <main style="flex:1;min-width:0;display:flex;flex-direction:column;background:#F4F6FA">
+        <!-- Header -->
+        <header style="{{ headerStyle }}">
+          <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ onToggleSidebar }}" style="width:38px;height:38px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:9px;cursor:pointer;color:#334155" style-hover="{{ chipHover }}">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </div>
+          </sc-if>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:18px;font-weight:800;letter-spacing:-.02em;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ header.title }}</div>
+            <sc-if value="{{ showChipText }}" hint-placeholder-val="{{ true }}">
+              <div style="font-size:12.5px;color:#64748B;margin-top:1px">{{ header.subtitle }}</div>
+            </sc-if>
+          </div>
+
+          <sc-if value="{{ header.showAdd }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ header.onAdd }}" style="{{ header.addBtnStyle }}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <sc-if value="{{ showChipText }}" hint-placeholder-val="{{ true }}">{{ header.addLabel }}</sc-if>
+            </button>
+          </sc-if>
+
+          <sc-if value="{{ showChipText }}" hint-placeholder-val="{{ true }}">
+            <div style="width:1px;height:30px;background:#E7ECF3"></div>
+          </sc-if>
+
+          <div onClick="{{ onToggleMenu }}" style="display:flex;align-items:center;gap:9px;cursor:pointer;padding:5px 8px 5px 5px;border-radius:10px" style-hover="{{ chipHover }}">
+            <div style="{{ me.avatarStyle }}">{{ me.initials }}</div>
+            <sc-if value="{{ showChipText }}" hint-placeholder-val="{{ true }}">
+              <div style="line-height:1.15">
+                <div style="font-size:13px;font-weight:700">{{ me.name }}</div>
+                <div style="font-size:11px;color:#64748B">{{ me.roleLabel }}</div>
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </sc-if>
+          </div>
+        </header>
+
+        <!-- Scroll content -->
+        <div style="flex:1;min-height:0;overflow:auto">
+
+          <!-- DASHBOARD -->
+          <sc-if value="{{ showDashboard }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ dashWrapStyle }}">
+              <sc-if value="{{ showPanelFilter }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;flex-wrap:wrap">
+                  <span style="font-size:12.5px;font-weight:700;color:#64748B;margin-right:4px">Ver datos de:</span>
+                  <sc-for list="{{ panelChips }}" as="f" hint-placeholder-count="4">
+                    <div onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <div style="display:grid;grid-template-columns:{{ metricsGridCols }};gap:16px;margin-bottom:22px">
+                <sc-for list="{{ metrics }}" as="m" hint-placeholder-count="4">
+                  <div style="background:#fff;border:1px solid #E7ECF3;border-radius:14px;padding:18px 20px">
+                    <div style="font-size:12.5px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:.05em">{{ m.label }}</div>
+                    <div style="font-size:32px;font-weight:800;letter-spacing:-.02em;margin-top:8px;color:{{ m.color }}">{{ m.value }}</div>
+                    <div style="font-size:12.5px;color:#94A3B8;margin-top:2px">{{ m.sub }}</div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="display:grid;grid-template-columns:{{ dashGridCols }};gap:16px">
+                <div style="background:#fff;border:1px solid #E7ECF3;border-radius:14px;padding:20px 22px">
+                  <div style="font-size:15px;font-weight:800;margin-bottom:16px">Clientes por etapa</div>
+                  <div style="display:flex;flex-direction:column;gap:13px">
+                    <sc-for list="{{ byStage }}" as="s" hint-placeholder-count="6">
+                      <div>
+                        <div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:5px"><span style="color:#475569">{{ s.name }}</span><span style="color:#0F172A;font-weight:700">{{ s.count }}</span></div>
+                        <div style="height:9px;background:#EEF2F7;border-radius:6px;overflow:hidden"><div style="{{ s.fill }}"></div></div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <div style="background:#fff;border:1px solid #E7ECF3;border-radius:14px;padding:20px 22px">
+                  <div style="font-size:15px;font-weight:800;margin-bottom:16px">Origen del cliente</div>
+                  <div style="display:flex;flex-direction:column;gap:13px">
+                    <sc-for list="{{ bySource }}" as="s" hint-placeholder-count="3">
+                      <div>
+                        <div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:5px"><span style="color:#475569;display:flex;align-items:center;gap:7px"><span style="{{ s.dot }}"></span>{{ s.name }}</span><span style="color:#0F172A;font-weight:700">{{ s.count }}</span></div>
+                        <div style="height:9px;background:#EEF2F7;border-radius:6px;overflow:hidden"><div style="{{ s.fill }}"></div></div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+
+                <sc-if value="{{ showByUser }}" hint-placeholder-val="{{ false }}">
+                  <div style="background:#fff;border:1px solid #E7ECF3;border-radius:14px;padding:20px 22px">
+                    <div style="font-size:15px;font-weight:800;margin-bottom:16px">Clientes por asesor</div>
+                    <div style="display:flex;flex-direction:column;gap:13px">
+                      <sc-for list="{{ byUser }}" as="s" hint-placeholder-count="3">
+                        <div>
+                          <div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:5px"><span style="color:#475569;display:flex;align-items:center;gap:7px"><span style="{{ s.dot }}"></span>{{ s.name }}</span><span style="color:#0F172A;font-weight:700">{{ s.count }}</span></div>
+                          <div style="height:9px;background:#EEF2F7;border-radius:6px;overflow:hidden"><div style="{{ s.fill }}"></div></div>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-if>
+              </div>
+
+              <sc-if value="{{ showStageTiming }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#fff;border:1px solid #E7ECF3;border-radius:14px;padding:20px 22px;margin-top:16px">
+                  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px">
+                    <div>
+                      <div style="font-size:15px;font-weight:800">Tiempo promedio en cada etapa</div>
+                      <div style="font-size:12.5px;color:#94A3B8;margin-top:3px">Cuánto permanecen los clientes en cada etapa del pipeline</div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:9px;background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:8px 13px">
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                      <div>
+                        <div style="font-size:10.5px;font-weight:700;color:#B91C1C;text-transform:uppercase;letter-spacing:.05em">Cuello de botella</div>
+                        <div style="font-size:13px;font-weight:700;color:#0F172A">{{ bottleneckLabel }}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display:grid;grid-template-columns:{{ timingGridCols }};gap:26px;margin-top:18px">
+                    <div style="display:flex;flex-direction:column;gap:13px">
+                      <sc-for list="{{ stageTimeBars }}" as="s" hint-placeholder-count="6">
+                        <div>
+                          <div style="display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;margin-bottom:5px"><span style="color:#475569">{{ s.name }}</span><span style="color:#0F172A;font-weight:700">{{ s.label }}</span></div>
+                          <div style="height:9px;background:#EEF2F7;border-radius:6px;overflow:hidden"><div style="{{ s.fill }}"></div></div>
+                        </div>
+                      </sc-for>
+                    </div>
+                    <sc-if value="{{ showByUser }}" hint-placeholder-val="{{ false }}">
+                    <div>
+                      <div style="font-size:11.5px;font-weight:700;color:#64748B;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Promedio por asesor</div>
+                      <sc-for list="{{ advTime }}" as="a" hint-placeholder-count="3">
+                        <div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid #F1F4F9">
+                          <span style="{{ a.dot }}"></span>
+                          <span style="flex:1;font-size:13px;font-weight:600;color:#0F172A;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.name }}</span>
+                          <span style="font-size:11.5px;color:#94A3B8;white-space:nowrap">Más lento: {{ a.slowName }}</span>
+                          <span style="font-size:13.5px;font-weight:800;color:#0F172A;white-space:nowrap;min-width:54px;text-align:right">{{ a.avgLabel }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                    </sc-if>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <!-- BOARD -->
+          <sc-if value="{{ showBoard }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;height:100%">
+              <sc-if value="{{ showBoardFilter }}" hint-placeholder-val="{{ false }}">
+                <div style="{{ boardFilterStyle }}">
+                  <span style="font-size:12.5px;font-weight:700;color:#64748B;margin-right:4px">Ver tablero de:</span>
+                  <sc-for list="{{ filterChips }}" as="f" hint-placeholder-count="4">
+                    <div onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <div style="{{ boardWrapStyle }}">
+                <div style="display:flex;gap:16px;height:100%;align-items:flex-start;min-width:min-content">
+                  <sc-for list="{{ boardColumns }}" as="col" hint-placeholder-count="5">
+                    <div style="{{ col.wrapStyle }}" onDragOver="{{ col.onDragOver }}" onDrop="{{ col.onDrop }}" onDragLeave="{{ col.onDragLeave }}">
+                      <div style="{{ col.headerStyle }}">
+                        <div style="display:flex;align-items:center;gap:8px;min-width:0">
+                          <span style="{{ col.dotStyle }}"></span>
+                          <span style="font-weight:700;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ col.name }}</span>
+                        </div>
+                        <span style="{{ col.countStyle }}">{{ col.count }}</span>
+                      </div>
+                      <div style="{{ col.listStyle }}">
+                        <sc-for list="{{ col.cards }}" as="card" hint-placeholder-count="2">
+                          <div draggable="{{ true }}" onClick="{{ card.onClick }}" onDragStart="{{ card.onDragStart }}" onDragEnd="{{ card.onDragEnd }}" style="{{ card.style }}" style-hover="{{ card.hover }}">
+                            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+                              <div style="font-weight:500;font-size:13px;line-height:1.25;color:#0F172A">{{ card.fullName }}</div>
+                              <sc-if value="{{ card.showOwner }}" hint-placeholder-val="{{ false }}">
+                                <div style="{{ card.ownerStyle }}" title="{{ card.ownerName }}">{{ card.ownerInitials }}</div>
+                              </sc-if>
+                            </div>
+                            <div style="margin-top:8px"><span style="{{ card.srcStyle }}">{{ card.srcLabel }}</span></div>
+                            <sc-if value="{{ card.showContact }}" hint-placeholder-val="{{ false }}">
+                              <div style="margin-top:10px;display:flex;flex-direction:column;gap:4px">
+                                <div style="font-size:12px;color:#64748B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:6px">
+                                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="m3.5 6 8.5 6 8.5-6"/></svg>
+                                  {{ card.email }}
+                                </div>
+                                <div style="font-size:12px;color:#64748B;display:flex;align-items:center;gap:6px">
+                                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L19 18l-1 3a16 16 0 0 1-13-13Z"/></svg>
+                                  {{ card.phone }}
+                                </div>
+                              </div>
+                            </sc-if>
+                          </div>
+                        </sc-for>
+                        <sc-if value="{{ col.empty }}" hint-placeholder-val="{{ false }}">
+                          <div style="border:1.5px dashed #D5DEEA;border-radius:10px;padding:18px;text-align:center;font-size:12.5px;color:#94A3B8">Arrastra clientes aquí</div>
+                        </sc-if>
+                        <sc-if value="{{ col.canAdd }}" hint-placeholder-val="{{ false }}">
+                          <div onClick="{{ col.onAdd }}" style="margin-top:2px;padding:9px;border-radius:9px;font-size:12.5px;font-weight:700;color:#64748B;text-align:center;cursor:pointer;border:1px dashed #D5DEEA" style-hover="{{ addColHover }}">+ Añadir cliente</div>
+                        </sc-if>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- CLIENTS LIST -->
+          <sc-if value="{{ showClients }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ secWrapStyle }}">
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+                <div style="position:relative;flex:1;max-width:340px">
+                  <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%)" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+                  <input value="{{ search }}" onChange="{{ onSearch }}" placeholder="Buscar por nombre o correo..." style="width:100%;padding:10px 12px 10px 36px;border:1px solid #E2E8F0;border-radius:10px;font-size:13.5px;background:#fff">
+                </div>
+                <span style="font-size:13px;color:#64748B;font-weight:600">{{ clientCount }} clientes</span>
+              </div>
+
+              <div style="background:#fff;border:1px solid #E7ECF3;border-radius:14px;overflow:hidden">
+                <div style="{{ tableHeadStyle }}">
+                  <div style="flex:2.2;min-width:0">Cliente</div>
+                  <sc-if value="{{ showFullTable }}" hint-placeholder-val="{{ true }}"><div style="flex:2;min-width:0">Contacto</div></sc-if>
+                  <sc-if value="{{ showFullTable }}" hint-placeholder-val="{{ true }}"><div style="flex:1.2">Origen</div></sc-if>
+                  <div style="flex:1.4">Etapa</div>
+                  <sc-if value="{{ showAsesorCol }}" hint-placeholder-val="{{ false }}"><div style="flex:1.2">Asesor</div></sc-if>
+                  <div style="width:34px;flex-shrink:0"></div>
+                  <sc-if value="{{ showDeleteCol }}" hint-placeholder-val="{{ false }}"><div style="width:36px;flex-shrink:0"></div></sc-if>
+                </div>
+                <sc-for list="{{ clientRows }}" as="r" hint-placeholder-count="8">
+                  <div onClick="{{ r.onEdit }}" title="Editar cliente" style="display:flex;align-items:center;padding:13px 18px;border-top:1px solid #F1F4F9;font-size:13.5px;cursor:pointer" style-hover="{{ rowHover }}">
+                    <div style="flex:2.2;min-width:0;display:flex;align-items:center;gap:11px">
+                      <div style="{{ r.avatarStyle }}">{{ r.initials }}</div>
+                      <div style="min-width:0">
+                        <div style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.fullName }}</div>
+                        <div style="font-size:11.5px;color:#94A3B8;font-weight:600;white-space:nowrap;display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden">
+                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+                          <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Ingreso: {{ r.ingresoLabel }}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <sc-if value="{{ showFullTable }}" hint-placeholder-val="{{ true }}">
+                    <div style="flex:2;min-width:0;color:#64748B">
+                      <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.email }}</div>
+                      <div style="font-size:12px;color:#94A3B8">{{ r.phone }}</div>
+                    </div>
+                    </sc-if>
+                    <sc-if value="{{ showFullTable }}" hint-placeholder-val="{{ true }}"><div style="flex:1.2"><span style="{{ r.srcStyle }}">{{ r.srcLabel }}</span></div></sc-if>
+                    <div style="flex:1.4;min-width:0;flex-shrink:0"><span style="{{ r.stageStyle }}">{{ r.stageName }}</span></div>
+                    <sc-if value="{{ showAsesorCol }}" hint-placeholder-val="{{ false }}">
+                      <div style="flex:1.2;display:flex;align-items:center;gap:8px;color:#475569;font-weight:600"><div style="{{ r.ownerStyle }}">{{ r.ownerInitials }}</div><span style="font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.ownerName }}</span></div>
+                    </sc-if>
+                    <div style="flex-shrink:0;display:flex;justify-content:flex-end;align-items:center;gap:6px;color:#94A3B8">
+                      <div style="width:34px;display:flex;justify-content:flex-end">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                      </div>
+                      <sc-if value="{{ r.canDelete }}" hint-placeholder-val="{{ false }}">
+                        <div onClick="{{ r.onDelete }}" title="Eliminar cliente" style="{{ r.delStyle }}" style-hover="{{ delBtnHover }}">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M5 7l1 13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg>
+                        </div>
+                      </sc-if>
+                    </div>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ noClients }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:40px;text-align:center;color:#94A3B8;font-size:14px">No se encontraron clientes.</div>
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- USERS (admin) -->
+          <sc-if value="{{ showUsers }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ secWrapStyle }}">
+              <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+                <span style="font-size:13px;color:#64748B;font-weight:600">{{ userCount }} usuarios</span>
+              </div>
+              <div style="background:#fff;border:1px solid #E7ECF3;border-radius:14px;overflow:hidden">
+                <div style="{{ tableHeadStyle }}">
+                  <div style="flex:2.2;min-width:0">Usuario</div>
+                  <div style="flex:1.2">Rol</div>
+                  <sc-if value="{{ showFullTable }}" hint-placeholder-val="{{ true }}"><div style="flex:1.6;min-width:0">Equipo</div></sc-if>
+                  <div style="flex:1">Clientes</div>
+                  <sc-if value="{{ showFullTable }}" hint-placeholder-val="{{ true }}"><div style="flex:1">Ganados</div></sc-if>
+                  <div style="width:34px;flex-shrink:0"></div>
+                </div>
+                <sc-for list="{{ userRows }}" as="u" hint-placeholder-count="6">
+                  <div onClick="{{ u.onEdit }}" title="Editar usuario" style="display:flex;align-items:center;padding:13px 18px;border-top:1px solid #F1F4F9;font-size:13.5px;cursor:pointer" style-hover="{{ rowHover }}">
+                    <div style="flex:2.2;min-width:0;display:flex;align-items:center;gap:11px">
+                      <div style="{{ u.avatarStyle }}">{{ u.initials }}</div>
+                      <div style="min-width:0">
+                        <div style="font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ u.name }}</div>
+                        <div style="font-size:11.5px;color:#94A3B8;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ u.title }}</div>
+                      </div>
+                    </div>
+                    <div style="flex:1.2"><span style="{{ u.roleBadge }}">{{ u.roleLabel }}</span></div>
+                    <sc-if value="{{ showFullTable }}" hint-placeholder-val="{{ true }}"><div style="flex:1.6;min-width:0;color:#64748B;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ u.teamLabel }}</div></sc-if>
+                    <div style="flex:1;font-weight:700;color:#0F172A">{{ u.total }}</div>
+                    <sc-if value="{{ showFullTable }}" hint-placeholder-val="{{ true }}"><div style="flex:1;font-weight:700;color:#16A34A">{{ u.won }}</div></sc-if>
+                    <div style="width:34px;flex-shrink:0;display:flex;justify-content:flex-end;color:#94A3B8">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- CONFIG (admin) -->
+          <sc-if value="{{ showConfig }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ configWrapStyle }}">
+              <div style="background:#fff;border:1px solid #E7ECF3;border-radius:14px;padding:22px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+                  <div style="font-size:16px;font-weight:800">Etapas del tablero</div>
+                  <button onClick="{{ onAddColumn }}" style="{{ header.addBtnStyle }}">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Nueva etapa
+                  </button>
+                </div>
+                <p style="font-size:13px;color:#64748B;margin:0 0 18px">Define las columnas que verá todo el equipo en el pipeline. Renómbralas, reordénalas o cambia su color.</p>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <sc-for list="{{ configColumns }}" as="col" hint-placeholder-count="5">
+                    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:11px 13px;border:1px solid #E7ECF3;border-radius:11px;background:#FCFDFE">
+                      <div style="display:flex;flex-direction:column;gap:2px">
+                        <div onClick="{{ col.onUp }}" style="{{ col.upStyle }}">▲</div>
+                        <div onClick="{{ col.onDown }}" style="{{ col.downStyle }}">▼</div>
+                      </div>
+                      <div style="display:flex;gap:5px">
+                        <sc-for list="{{ col.swatches }}" as="sw" hint-placeholder-count="6">
+                          <div onClick="{{ sw.onClick }}" style="{{ sw.style }}"></div>
+                        </sc-for>
+                      </div>
+                      <input value="{{ col.name }}" onChange="{{ col.onRename }}" style="flex:1;min-width:0;padding:9px 11px;border:1px solid #E2E8F0;border-radius:8px;font-size:13.5px;font-weight:600">
+                      <span style="font-size:12px;color:#94A3B8;font-weight:600;white-space:nowrap">{{ col.count }} clientes</span>
+                      <div onClick="{{ col.onDelete }}" style="{{ col.delStyle }}" title="Eliminar etapa">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M9 7V5h6v2"/><path d="M6 7l1 13h10l1-13"/></svg>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+
+              <div style="background:#fff;border:1px solid #E7ECF3;border-radius:14px;padding:22px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+                  <div style="font-size:16px;font-weight:800">Origen del cliente</div>
+                  <button onClick="{{ onAddSource }}" style="{{ header.addBtnStyle }}">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Nuevo origen
+                  </button>
+                </div>
+                <p style="font-size:13px;color:#64748B;margin:0 0 18px">Lista de orígenes disponible al registrar un nuevo cliente. Renómbralos, reordénalos o cambia su color.</p>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <sc-for list="{{ configSources }}" as="src" hint-placeholder-count="12">
+                    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:11px 13px;border:1px solid #E7ECF3;border-radius:11px;background:#FCFDFE">
+                      <div style="display:flex;flex-direction:column;gap:2px">
+                        <div onClick="{{ src.onUp }}" style="{{ src.upStyle }}">▲</div>
+                        <div onClick="{{ src.onDown }}" style="{{ src.downStyle }}">▼</div>
+                      </div>
+                      <span style="{{ src.codeStyle }}">{{ src.code }}</span>
+                      <div style="display:flex;gap:5px">
+                        <sc-for list="{{ src.swatches }}" as="sw" hint-placeholder-count="6">
+                          <div onClick="{{ sw.onClick }}" style="{{ sw.style }}"></div>
+                        </sc-for>
+                      </div>
+                      <input value="{{ src.label }}" onChange="{{ src.onRename }}" placeholder="Nombre del origen" style="flex:1;min-width:0;padding:9px 11px;border:1px solid #E2E8F0;border-radius:8px;font-size:13.5px;font-weight:600">
+                      <span style="font-size:12px;color:#94A3B8;font-weight:600;white-space:nowrap">{{ src.count }} clientes</span>
+                      <div onClick="{{ src.onDelete }}" style="{{ src.delStyle }}" title="Eliminar origen">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M9 7V5h6v2"/><path d="M6 7l1 13h10l1-13"/></svg>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+        </div>
+      </main>
+    </div>
+
+    <!-- User menu popover -->
+    <sc-if value="{{ showUserMenu }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ onCloseMenu }}" style="position:fixed;inset:0;z-index:40"></div>
+      <div style="position:fixed;top:62px;right:26px;width:248px;background:#fff;border:1px solid #E7ECF3;border-radius:14px;box-shadow:0 16px 40px rgba(15,23,42,.16);padding:8px;z-index:41;animation:ccpop .16s ease">
+        <div style="font-size:11px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.06em;padding:8px 10px 6px">Cambiar de usuario</div>
+        <sc-for list="{{ switchUsers }}" as="u" hint-placeholder-count="4">
+          <div onClick="{{ u.onClick }}" style="{{ u.style }}">
+            <div style="{{ u.avatarStyle }}">{{ u.initials }}</div>
+            <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700">{{ u.name }}</div><div style="font-size:11.5px;color:#64748B">{{ u.roleLabel }}</div></div>
+            <sc-if value="{{ u.current }}" hint-placeholder-val="{{ false }}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </sc-if>
+          </div>
+        </sc-for>
+        <div style="height:1px;background:#F1F4F9;margin:6px 4px"></div>
+        <div onClick="{{ onLogout }}" style="display:flex;align-items:center;gap:9px;padding:10px;border-radius:9px;cursor:pointer;font-size:13.5px;font-weight:700;color:#DC2626" style-hover="{{ logoutHover }}">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Cerrar sesión
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- Add Client Modal -->
+    <sc-if value="{{ showClientModal }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ clientModal.onClose }}" style="position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:50;display:flex;align-items:center;justify-content:center;animation:ccfade .15s ease">
+        <div onClick="{{ stop }}" style="width:520px;max-width:92vw;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(15,23,42,.3);animation:ccpop .2s ease">
+          <div style="flex-shrink:0;padding:15px 24px;border-bottom:1px solid #EEF2F7;display:flex;align-items:center;justify-content:space-between">
+            <div style="font-size:17px;font-weight:800">{{ clientModal.title }}</div>
+            <div onClick="{{ clientModal.onClose }}" style="cursor:pointer;color:#94A3B8;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:8px" style-hover="{{ chipHover }}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+            </div>
+          </div>
+          <div style="flex:1;min-height:0;overflow:auto;padding:16px 24px;display:flex;flex-direction:column;gap:11px">
+            <div style="{{ formRowStyle }}">
+              <div style="flex:1">
+                <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:6px">Nombre *</label>
+                <input value="{{ clientModal.form.nombre }}" onChange="{{ clientModal.onNombre }}" readOnly="{{ clientModal.basicReadOnly }}" placeholder="Ej. Lucía" style="{{ clientModal.basicInputStyle }}">
+              </div>
+              <div style="flex:1">
+                <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:6px">Apellidos</label>
+                <input value="{{ clientModal.form.apellidos }}" onChange="{{ clientModal.onApellidos }}" readOnly="{{ clientModal.basicReadOnly }}" placeholder="Ej. Gómez Ruiz" style="{{ clientModal.basicInputStyle }}">
+              </div>
+            </div>
+            <div>
+              <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:6px">Correo</label>
+              <input value="{{ clientModal.form.email }}" onChange="{{ clientModal.onEmail }}" readOnly="{{ clientModal.basicReadOnly }}" placeholder="cliente@correo.com" style="{{ clientModal.basicInputStyle }}">
+            </div>
+            <div style="{{ formRowStyle }}">
+              <div style="flex:1">
+                <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:6px">Número de contacto</label>
+                <input value="{{ clientModal.form.telefono }}" onChange="{{ clientModal.onTelefono }}" readOnly="{{ clientModal.basicReadOnly }}" placeholder="+506 600 000 000" style="{{ clientModal.basicInputStyle }}">
+              </div>
+              <div style="flex:1">
+                <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:6px">WhatsApp</label>
+                <input value="{{ clientModal.form.whatsapp }}" onChange="{{ clientModal.onWhatsapp }}" readOnly="{{ clientModal.basicReadOnly }}" placeholder="+506 600 000 000" style="{{ clientModal.basicInputStyle }}">
+              </div>
+            </div>
+            <div style="{{ formRowStyle }}">
+              <div style="flex:1">
+                <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:6px">Origen del cliente</label>
+                <select value="{{ clientModal.form.source }}" onChange="{{ clientModal.onSource }}" disabled="{{ clientModal.basicDisabled }}" style="{{ clientModal.basicInputStyle }}">
+                  <sc-for list="{{ clientModal.sources }}" as="s" hint-placeholder-count="3"><option value="{{ s.id }}">{{ s.label }}</option></sc-for>
+                </select>
+              </div>
+              <div style="flex:1">
+                <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:6px">Etapa</label>
+                <select value="{{ clientModal.form.columnId }}" onChange="{{ clientModal.onColumn }}" style="{{ inputStyle }}">
+                  <sc-for list="{{ clientModal.columns }}" as="c" hint-placeholder-count="5"><option value="{{ c.id }}">{{ c.name }}</option></sc-for>
+                </select>
+              </div>
+            </div>
+            <sc-if value="{{ clientModal.showOwner }}" hint-placeholder-val="{{ false }}">
+              <div>
+                <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:6px">{{ clientModal.ownerLabel }}</label>
+                <select value="{{ clientModal.form.ownerId }}" onChange="{{ clientModal.onOwner }}" style="{{ inputStyle }}">
+                  <sc-for list="{{ clientModal.owners }}" as="o" hint-placeholder-count="3"><option value="{{ o.id }}">{{ o.name }}</option></sc-for>
+                </select>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ clientModal.isEdit }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;gap:10px;padding:10px 13px;border:1px solid #EEF2F7;background:#F8FAFC;border-radius:11px">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+                <div>
+                  <div style="font-size:11.5px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.04em">Fecha y hora de ingreso</div>
+                  <div style="font-size:13.5px;font-weight:700;color:#0F172A;margin-top:2px">{{ clientModal.createdLabel }}</div>
+                </div>
+              </div>
+
+              <div style="border-top:1px solid #EEF2F7;padding-top:13px">
+                <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:9px">Comentarios</label>
+                <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:13px">
+                  <sc-for list="{{ clientModal.comments }}" as="cm" hint-placeholder-count="2">
+                    <div style="display:flex;gap:10px">
+                      <div style="{{ cm.avatarStyle }}">{{ cm.initials }}</div>
+                      <div style="flex:1;min-width:0;background:#F8FAFC;border:1px solid #EEF2F7;border-radius:10px;padding:9px 12px">
+                        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:3px">
+                          <span style="font-size:13px;font-weight:700;color:#0F172A">{{ cm.author }}</span>
+                          <span style="font-size:11px;color:#94A3B8;font-weight:600;white-space:nowrap">{{ cm.when }}</span>
+                        </div>
+                        <div style="font-size:13px;color:#475569;line-height:1.45;text-wrap:pretty">{{ cm.text }}</div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="display:flex;gap:9px;align-items:flex-end">
+                  <textarea value="{{ clientModal.commentDraft }}" onChange="{{ clientModal.onCommentDraft }}" placeholder="Escribe un comentario..." rows="2" style="flex:1;min-width:0;padding:10px 12px;border:1px solid #E2E8F0;border-radius:10px;font-size:13.5px;resize:vertical;font-family:inherit;color:#0F172A"></textarea>
+                  <button onClick="{{ clientModal.onAddComment }}" style="{{ clientModal.commentBtnStyle }}">Comentar</button>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+          <div style="flex-shrink:0;padding:13px 24px;border-top:1px solid #EEF2F7;display:flex;justify-content:flex-end;gap:10px">
+            <button onClick="{{ clientModal.onClose }}" style="padding:11px 18px;border:1px solid #E2E8F0;background:#fff;border-radius:10px;font-size:14px;font-weight:700;color:#475569;cursor:pointer">Cancelar</button>
+            <button onClick="{{ clientModal.onSave }}" style="{{ clientModal.saveStyle }}">{{ clientModal.saveLabel }}</button>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- Confirm Delete Client Modal -->
+    <sc-if value="{{ showConfirmDelClient }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ confirmDelClient.onCancel }}" style="position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:60;display:flex;align-items:center;justify-content:center;animation:ccfade .15s ease">
+        <div onClick="{{ stop }}" style="width:420px;max-width:92vw;background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(15,23,42,.3);animation:ccpop .2s ease;padding:26px 26px 22px">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+            <div style="width:46px;height:46px;flex-shrink:0;border-radius:12px;background:#FEE2E2;display:flex;align-items:center;justify-content:center;color:#DC2626">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M5 7l1 13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-13"/><path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg>
+            </div>
+            <div style="font-size:18px;font-weight:800;color:#0F172A">Eliminar cliente</div>
+          </div>
+          <p style="font-size:14px;line-height:1.55;color:#475569;margin:0 0 22px">¿Seguro que quieres eliminar a <strong style="color:#0F172A">{{ confirmDelClient.name }}</strong>? Esta acción no se puede deshacer y se perderán sus comentarios e historial.</p>
+          <div style="display:flex;justify-content:flex-end;gap:10px">
+            <button onClick="{{ confirmDelClient.onCancel }}" style="padding:11px 18px;border:1px solid #E2E8F0;background:#fff;border-radius:10px;font-size:14px;font-weight:700;color:#475569;cursor:pointer">Cancelar</button>
+            <button onClick="{{ confirmDelClient.onConfirm }}" style="padding:11px 20px;border:none;background:#DC2626;border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- Client Detail Modal -->
+    <sc-if value="{{ showClientDetail }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ clientDetail.onClose }}" style="position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:50;display:flex;align-items:center;justify-content:center;animation:ccfade .15s ease">
+        <div onClick="{{ stop }}" style="width:460px;max-width:92vw;max-height:90vh;overflow:auto;background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(15,23,42,.3);animation:ccpop .2s ease">
+          <div style="padding:22px 24px;border-bottom:1px solid #EEF2F7;display:flex;align-items:center;gap:14px">
+            <div style="{{ clientDetail.avatarStyle }}">{{ clientDetail.initials }}</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:18px;font-weight:800;line-height:1.2">{{ clientDetail.fullName }}</div>
+              <div style="margin-top:7px"><span style="{{ clientDetail.stageStyle }}">{{ clientDetail.stageName }}</span></div>
+            </div>
+            <div onClick="{{ clientDetail.onClose }}" style="cursor:pointer;color:#94A3B8;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:8px" style-hover="{{ chipHover }}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+            </div>
+          </div>
+          <div style="padding:6px 24px 20px;display:flex;flex-direction:column">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid #F1F4F9">
+              <span style="font-size:12px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.05em">Origen</span>
+              <span style="{{ clientDetail.sourceStyle }}">{{ clientDetail.sourceLabel }}</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid #F1F4F9">
+              <span style="font-size:12px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.05em">Correo</span>
+              <span style="font-size:13.5px;font-weight:600;color:#0F172A;text-align:right;word-break:break-all">{{ clientDetail.email }}</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid #F1F4F9">
+              <span style="font-size:12px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.05em">Nº de contacto</span>
+              <span style="font-size:13.5px;font-weight:600;color:#0F172A;text-align:right">{{ clientDetail.phone }}</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid #F1F4F9">
+              <span style="font-size:12px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.05em">WhatsApp</span>
+              <span style="font-size:13.5px;font-weight:600;color:#0F172A;text-align:right">{{ clientDetail.whatsapp }}</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 0">
+              <span style="font-size:12px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:.05em">Asesor</span>
+              <span style="display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:#0F172A"><span style="{{ clientDetail.ownerStyle }}">{{ clientDetail.ownerInitials }}</span>{{ clientDetail.ownerName }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- Add Column Modal -->
+    <sc-if value="{{ showColumnModal }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ columnModal.onClose }}" style="position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:50;display:flex;align-items:center;justify-content:center;animation:ccfade .15s ease">
+        <div onClick="{{ stop }}" style="width:420px;max-width:92vw;background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(15,23,42,.3);animation:ccpop .2s ease">
+          <div style="padding:20px 24px;border-bottom:1px solid #EEF2F7;font-size:17px;font-weight:800">Nueva etapa</div>
+          <div style="padding:22px 24px;display:flex;flex-direction:column;gap:15px">
+            <div>
+              <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:6px">Nombre de la etapa</label>
+              <input value="{{ columnModal.form.name }}" onChange="{{ columnModal.onName }}" placeholder="Ej. Seguimiento" style="{{ inputStyle }}">
+            </div>
+            <div>
+              <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:8px">Color</label>
+              <div style="display:flex;gap:9px">
+                <sc-for list="{{ columnModal.swatches }}" as="sw" hint-placeholder-count="8">
+                  <div onClick="{{ sw.onClick }}" style="{{ sw.style }}"></div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          <div style="padding:16px 24px;border-top:1px solid #EEF2F7;display:flex;justify-content:flex-end;gap:10px">
+            <button onClick="{{ columnModal.onClose }}" style="padding:11px 18px;border:1px solid #E2E8F0;background:#fff;border-radius:10px;font-size:14px;font-weight:700;color:#475569;cursor:pointer">Cancelar</button>
+            <button onClick="{{ columnModal.onSave }}" style="{{ columnModal.saveStyle }}">Crear etapa</button>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- Add / Edit User Modal -->
+    <sc-if value="{{ showUserModal }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ userModal.onClose }}" style="position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:50;display:flex;align-items:center;justify-content:center;animation:ccfade .15s ease">
+        <div onClick="{{ stop }}" style="width:480px;max-width:92vw;background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(15,23,42,.3);animation:ccpop .2s ease">
+          <div style="padding:20px 24px;border-bottom:1px solid #EEF2F7;display:flex;align-items:center;justify-content:space-between">
+            <div style="font-size:17px;font-weight:800">{{ userModal.title }}</div>
+            <div onClick="{{ userModal.onClose }}" style="cursor:pointer;color:#94A3B8;width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:8px" style-hover="{{ chipHover }}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+            </div>
+          </div>
+          <div style="padding:22px 24px;display:flex;flex-direction:column;gap:15px">
+            <div>
+              <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:6px">Nombre *</label>
+              <input value="{{ userModal.form.name }}" onChange="{{ userModal.onName }}" placeholder="Ej. Marta Iglesias" style="{{ inputStyle }}">
+            </div>
+            <div>
+              <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:6px">Cargo</label>
+              <input value="{{ userModal.form.title }}" onChange="{{ userModal.onTitle }}" placeholder="Ej. Asesor inmobiliario" style="{{ inputStyle }}">
+            </div>
+            <div style="{{ formRowStyle }}">
+              <div style="flex:1">
+                <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:6px">Rol</label>
+                <select value="{{ userModal.form.role }}" onChange="{{ userModal.onRole }}" style="{{ inputStyle }}">
+                  <sc-for list="{{ userModal.roleOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o.id }}">{{ o.label }}</option></sc-for>
+                </select>
+              </div>
+              <sc-if value="{{ userModal.showSupervisor }}" hint-placeholder-val="{{ false }}">
+                <div style="flex:1">
+                  <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:6px">Supervisor a cargo</label>
+                  <select value="{{ userModal.form.supervisorId }}" onChange="{{ userModal.onSupervisor }}" style="{{ inputStyle }}">
+                    <sc-for list="{{ userModal.supervisors }}" as="s" hint-placeholder-count="2"><option value="{{ s.id }}">{{ s.name }}</option></sc-for>
+                  </select>
+                </div>
+              </sc-if>
+            </div>
+            <div>
+              <label style="font-size:12.5px;font-weight:700;color:#475569;display:block;margin-bottom:8px">Color del avatar</label>
+              <div style="display:flex;gap:9px;flex-wrap:wrap">
+                <sc-for list="{{ userModal.swatches }}" as="sw" hint-placeholder-count="8">
+                  <div onClick="{{ sw.onClick }}" style="{{ sw.style }}"></div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          <div style="padding:16px 24px;border-top:1px solid #EEF2F7;display:flex;justify-content:flex-end;gap:10px">
+            <button onClick="{{ userModal.onClose }}" style="padding:11px 18px;border:1px solid #E2E8F0;background:#fff;border-radius:10px;font-size:14px;font-weight:700;color:#475569;cursor:pointer">Cancelar</button>
+            <button onClick="{{ userModal.onSave }}" style="{{ userModal.saveStyle }}">{{ userModal.saveLabel }}</button>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  PALETTE = ['#2563EB','#0891B2','#7C3AED','#D97706','#EA580C','#16A34A','#E11D48','#0F766E'];
+
+  state = {
+    currentUserId: null,
+    loginPick: 'u_admin',
+    activeSection: 'board',
+    boardFilter: 'all',
+    panelFilter: 'all',
+    search: '',
+    winW: (typeof window !== 'undefined' ? window.innerWidth : 1280),
+    sidebarOpen: false,
+    draggingId: null,
+    dragOverCol: null,
+    showClientModal: false,
+    showColumnModal: false,
+    showUserModal: false,
+    showUserMenu: false,
+    confirmDelClientId: null,
+    detailId: null,
+    editingId: null,
+    commentDraft: '',
+    clientForm: null,
+    columnForm: null,
+    userForm: null,
+    editingUserId: null,
+    density: null,
+    boardStyle: null,
+    accent: null,
+    users: [
+      { id: 'u_admin',  name: 'Laura Méndez',  role: 'admin',      title: 'Gerente comercial',     color: '#2563EB' },
+      { id: 'u_edit1',  name: 'Paula Soto',    role: 'editor',     title: 'Registro de clientes',  color: '#D97706' },
+      { id: 'u_sup1',   name: 'Roberto Vidal', role: 'supervisor', title: 'Supervisor de equipo',  color: '#DB2777' },
+      { id: 'u_carlos', name: 'Carlos Ruiz',   role: 'user', title: 'Asesor inmobiliario',  color: '#0891B2', supervisorId: 'u_sup1' },
+    ],
+    columns: [
+      { id: 'c1', name: 'Nuevo cliente',   color: '#2563EB' },
+      { id: 'c2', name: 'Contactado',      color: '#0891B2' },
+      { id: 'c3', name: 'Visita agendada', color: '#D97706' },
+      { id: 'c4', name: 'Propuesta',       color: '#7C3AED' },
+      { id: 'c5', name: 'Negociación',     color: '#EA580C' },
+      { id: 'c6', name: 'Cerrado ganado',  color: '#16A34A' },
+    ],
+    sources: [
+      { id: 'p1',  code: 'P1',  label: 'Propiedades con demanda inscrita', color: '#2563EB' },
+      { id: 'p2',  code: 'P2',  label: 'Con edictos anunciados',           color: '#0891B2' },
+      { id: 'p3',  code: 'P3',  label: 'Fideicomiso',                      color: '#7C3AED' },
+      { id: 'p4',  code: 'P4',  label: 'Proceso concursal',                color: '#D97706' },
+      { id: 'p5',  code: 'P5',  label: 'Estrellitas activas',              color: '#EA580C' },
+      { id: 'p6',  code: 'P6',  label: 'Procesos en Abandono',             color: '#16A34A' },
+      { id: 'p7',  code: 'P7',  label: 'Sin prima pagada',                 color: '#E11D48' },
+      { id: 'p8',  code: 'P8',  label: 'Citas fallidas',                   color: '#0F766E' },
+      { id: 'p9',  code: 'P9',  label: 'Citas en abandono',                color: '#9333EA' },
+      { id: 'p10', code: 'P10', label: 'Redes sociales',                   color: '#0284C7' },
+      { id: 'p11', code: 'P11', label: 'Remate en 24 horas',               color: '#DC2626' },
+      { id: 'p12', code: 'P12', label: 'Después del remate',               color: '#65A30D' },
+    ],
+    clients: [
+      { id: 'k1',  nombre: 'Mateo',   apellidos: 'Fernández Lara', email: 'mateo.fernandez@correo.com', telefono: '+506 612 845 220', whatsapp: '+506 612 845 220', source: 'p1',  columnId: 'c1', ownerId: 'u_carlos', createdAt: new Date('2026-06-02T09:15').getTime(), comments: [ { id: 'cm1', userId: 'u_carlos', text: 'Cliente muy interesado en pisos en el centro. Llamar el lunes.', at: new Date('2026-06-02T10:30').getTime() }, { id: 'cm2', userId: 'u_admin', text: 'Asignado a Carlos. Prioridad alta.', at: new Date('2026-06-02T12:00').getTime() } ] },
+      { id: 'k2',  nombre: 'Lucía',   apellidos: 'Gómez Ruiz',     email: 'lucia.gomez@correo.com',     telefono: '+506 655 102 339', whatsapp: '+506 655 102 339', source: 'p2',  columnId: 'c2', ownerId: 'u_carlos', createdAt: new Date('2026-06-03T11:40').getTime(), comments: [] },
+      { id: 'k3',  nombre: 'Javier',  apellidos: 'Morales Pino',   email: 'javier.morales@correo.com',  telefono: '+506 699 471 008', whatsapp: '+506 699 471 008', source: 'p3',  columnId: 'c3', ownerId: 'u_carlos', createdAt: new Date('2026-06-04T16:05').getTime(), comments: [] },
+      { id: 'k4',  nombre: 'Carmen',  apellidos: 'Ortega Vidal',   email: 'carmen.ortega@correo.com',   telefono: '+506 622 559 184', whatsapp: '+506 622 559 184', source: 'p4',  columnId: 'c1', ownerId: 'u_carlos', createdAt: new Date('2026-06-05T10:20').getTime(), comments: [] },
+      { id: 'k5',  nombre: 'Sofía',   apellidos: 'Castro Núñez',   email: 'sofia.castro@correo.com',    telefono: '+506 633 740 921', whatsapp: '+506 633 740 921', source: 'p5',  columnId: 'c4', ownerId: 'u_carlos', createdAt: new Date('2026-06-06T13:50').getTime(), comments: [ { id: 'cm3', userId: 'u_carlos', text: 'Envió documentación. Pendiente de agendar visita.', at: new Date('2026-06-06T15:20').getTime() } ] },
+      { id: 'k6',  nombre: 'Pablo',   apellidos: 'Romero Gil',     email: 'pablo.romero@correo.com',    telefono: '+506 644 318 776', whatsapp: '+506 644 318 776', source: 'p6',  columnId: 'c2', ownerId: 'u_carlos', createdAt: new Date('2026-06-07T08:30').getTime(), comments: [] },
+      { id: 'k7',  nombre: 'Valentina', apellidos: 'Díaz Soto',    email: 'valentina.diaz@correo.com',  telefono: '+506 677 092 145', whatsapp: '+506 677 092 145', source: 'p7',  columnId: 'c5', ownerId: 'u_carlos', createdAt: new Date('2026-06-08T15:10').getTime(), comments: [] },
+      { id: 'k8',  nombre: 'Andrés',  apellidos: 'Navarro Cano',   email: 'andres.navarro@correo.com',  telefono: '+506 688 213 670', whatsapp: '+506 688 213 670', source: 'p8',  columnId: 'c6', ownerId: 'u_carlos', createdAt: new Date('2026-06-09T12:00').getTime(), comments: [] },
+      { id: 'k9',  nombre: 'Elena',   apellidos: 'Vargas Mora',    email: 'elena.vargas@correo.com',    telefono: '+506 611 980 442', whatsapp: '+506 611 980 442', source: 'p9',  columnId: 'c1', ownerId: 'u_carlos', createdAt: new Date('2026-06-10T09:45').getTime(), comments: [] },
+      { id: 'k10', nombre: 'Hugo',    apellidos: 'Ramírez Peña',   email: 'hugo.ramirez@correo.com',    telefono: '+506 654 027 318', whatsapp: '+506 654 027 318', source: 'p10', columnId: 'c3', ownerId: 'u_carlos', createdAt: new Date('2026-06-11T17:25').getTime(), comments: [] },
+      { id: 'k11', nombre: 'Marta',   apellidos: 'Iglesias Roca',  email: 'marta.iglesias@correo.com',  telefono: '+506 666 451 209', whatsapp: '+506 666 451 209', source: 'p11', columnId: 'c6', ownerId: 'u_carlos', createdAt: new Date('2026-06-12T14:15').getTime(), comments: [] },
+      { id: 'k12', nombre: 'Daniel',  apellidos: 'Cruz Bravo',     email: 'daniel.cruz@correo.com',     telefono: '+506 633 118 905', whatsapp: '+506 633 118 905', source: 'p12', columnId: 'c2', ownerId: 'u_carlos', createdAt: new Date('2026-06-13T10:05').getTime(), comments: [] },
+      { id: 'k13', nombre: 'Paula',   apellidos: 'Reyes Marín',    email: 'paula.reyes@correo.com',     telefono: '+506 622 770 463', whatsapp: '+506 622 770 463', source: 'p1',  columnId: 'c4', ownerId: 'u_carlos', createdAt: new Date('2026-06-14T16:40').getTime(), comments: [] },
+      { id: 'k14', nombre: 'Sergio',  apellidos: 'Méndez Aguilar', email: 'sergio.mendez@correo.com',   telefono: '+506 699 305 712', whatsapp: '+506 699 305 712', source: 'p5',  columnId: 'c5', ownerId: 'u_carlos', createdAt: new Date('2026-06-15T09:30').getTime(), comments: [] },
+      { id: 'k15', nombre: 'Natalia', apellidos: 'Peña Lozano',    email: 'natalia.pena@correo.com',    telefono: '+506 611 624 880', whatsapp: '+506 611 624 880', source: 'p10', columnId: 'c1', ownerId: 'u_carlos', createdAt: new Date('2026-06-16T11:55').getTime(), comments: [] },
+      { id: 'k16', nombre: 'Iván',    apellidos: 'Flores Campos',  email: 'ivan.flores@correo.com',     telefono: '+506 655 849 271', whatsapp: '+506 655 849 271', source: 'p3',  columnId: 'c6', ownerId: 'u_carlos', createdAt: new Date('2026-06-17T13:20').getTime(), comments: [] },
+    ],
+  };
+
+  // ---------- helpers ----------
+  componentDidMount() {
+    this._onResize = () => this.setState({ winW: window.innerWidth });
+    window.addEventListener('resize', this._onResize);
+    this.seedStageTiming();
+  }
+  // Backfill realistic stage-timing history so the report has meaningful data in the demo.
+  seedStageTiming = () => {
+    const cols = this.state.columns;
+    const HOUR = 3600 * 1000;
+    const mkRng = (seed) => { let x = 0; for (let i = 0; i < seed.length; i++) x = (x * 31 + seed.charCodeAt(i)) >>> 0; return () => { x = (x * 1103515245 + 12345) >>> 0; return (x >>> 8) / 16777216; }; };
+    this.setState(s => ({
+      clients: s.clients.map(c => {
+        if (c.stageHistory) return c;
+        const r = mkRng(c.id);
+        const idx = Math.max(0, cols.findIndex(col => col.id === c.columnId));
+        const now = Date.now();
+        const curHrs = 2 + Math.floor(r() * 70);            // 2–72h in current stage
+        const enteredCur = now - curHrs * HOUR;
+        const hist = [];
+        let cursor = enteredCur;
+        for (let i = idx - 1; i >= 0; i--) {                // earlier stages, going back in time
+          const dur = (3 + Math.floor(r() * 45)) * HOUR;
+          hist.unshift({ columnId: cols[i].id, ownerId: c.ownerId, enteredAt: cursor - dur, exitedAt: cursor });
+          cursor -= dur;
+        }
+        return { ...c, stageEnteredAt: enteredCur, stageHistory: hist };
+      }),
+    }));
+  };
+  // Close the current stage segment and open a new one when a client changes column.
+  _applyStage = (c, newCol, now) => {
+    if (c.columnId === newCol) return c;
+    const seg = { columnId: c.columnId, ownerId: c.ownerId, enteredAt: c.stageEnteredAt || now, exitedAt: now };
+    return { ...c, columnId: newCol, stageEnteredAt: now, stageHistory: [...(c.stageHistory || []), seg] };
+  }
+  componentWillUnmount() {
+    if (this._onResize) window.removeEventListener('resize', this._onResize);
+  }
+  toggleSidebar = () => this.setState(s => ({ sidebarOpen: !s.sidebarOpen }));
+  closeSidebar = () => this.setState({ sidebarOpen: false });
+  initials = (name) => name.split(' ').filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+  curUser = () => this.state.users.find(u => u.id === this.state.currentUserId) || null;
+  isAdmin = () => { const u = this.curUser(); return !!u && u.role === 'admin'; };
+  isSupervisor = () => { const u = this.curUser(); return !!u && u.role === 'supervisor'; };
+  isEditor = () => { const u = this.curUser(); return !!u && u.role === 'editor'; };
+  managedIds = () => {
+    const u = this.curUser();
+    if (!u) return [];
+    if (u.role === 'admin') return this.state.users.filter(x => x.role === 'user').map(x => x.id);
+    if (u.role === 'supervisor') return this.state.users.filter(x => x.role === 'user' && x.supervisorId === u.id).map(x => x.id);
+    return [u.id];
+  };
+  effDensity = () => 'compact';
+  effStyle   = () => 'minimal';
+  effAccent  = () => '#AC740E';
+  srcById = (id) => this.state.sources.find(x => x.id === id) || null;
+  fmtDateTime = (ts) => {
+    if (!ts) return '—';
+    const d = new Date(ts);
+    return d.toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' }) + ' · ' + d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+  };
+  fmtDateShort = (ts) => {
+    if (!ts) return '—';
+    const d = new Date(ts);
+    return d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }) + ', ' + d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+  };
+
+  // ---------- actions ----------
+  login = (id) => { const lu = this.state.users.find(x => x.id === id); this.setState({ currentUserId: id, activeSection: (lu && lu.role === 'editor') ? 'clients' : 'board', boardFilter: 'all', showUserMenu: false }); };
+  logout = () => this.setState({ currentUserId: null, showUserMenu: false });
+  pickLogin = (id) => this.setState({ loginPick: id });
+  goTo = (s) => this.setState({ activeSection: s, sidebarOpen: false });
+  setFilter = (id) => this.setState({ boardFilter: id });
+  setPanelFilter = (id) => this.setState({ panelFilter: id });
+  setSearch = (e) => this.setState({ search: e.target.value });
+  toggleMenu = () => this.setState(s => ({ showUserMenu: !s.showUserMenu }));
+  closeMenu = () => this.setState({ showUserMenu: false });
+  setDensity = (v) => this.setState({ density: v });
+  setBoardStyle = (v) => this.setState({ boardStyle: v });
+  setAccent = (v) => this.setState({ accent: v });
+
+  moveClient = (clientId, colId) => {
+    if (!clientId) return;
+    this.setState(s => {
+      const moved = s.clients.find(c => c.id === clientId);
+      if (!moved) return { draggingId: null, dragOverCol: null };
+      const rest = s.clients.filter(c => c.id !== clientId);
+      return {
+        clients: [...rest, this._applyStage(moved, colId, Date.now())],
+        draggingId: null, dragOverCol: null,
+      };
+    });
+  };
+
+  openClientDetail = (id) => this.setState({ detailId: id });
+  closeClientDetail = () => this.setState({ detailId: null });
+
+  openClientModal = (presetCol) => {
+    const u = this.curUser();
+    const cols = this.state.columns;
+    this.setState({
+      showClientModal: true,
+      editingId: null,
+      commentDraft: '',
+      clientForm: {
+        nombre: '', apellidos: '', email: '', telefono: '', whatsapp: '',
+        source: (this.state.sources[0] && this.state.sources[0].id) || '',
+        columnId: presetCol || (cols[0] && cols[0].id),
+        ownerId: this.isEditor()
+          ? (((this.state.users.find(x => x.role === 'supervisor') || {}).id) || u.id)
+          : (this.isAdmin() || this.isSupervisor())
+            ? (this.state.boardFilter !== 'all' ? this.state.boardFilter : (this.managedIds()[0] || u.id))
+            : u.id,
+      },
+    });
+  };
+  openEditClient = (id) => {
+    const c = this.state.clients.find(x => x.id === id);
+    if (!c) return;
+    this.setState({
+      showClientModal: true, editingId: id, detailId: null, commentDraft: '',
+      clientForm: { nombre: c.nombre, apellidos: c.apellidos, email: c.email, telefono: c.telefono, whatsapp: c.whatsapp || '', source: c.source, columnId: c.columnId, ownerId: c.ownerId },
+    });
+  };
+  setCommentDraft = (e) => this.setState({ commentDraft: e.target.value });
+  addComment = () => {
+    const id = this.state.editingId;
+    const text = (this.state.commentDraft || '').trim();
+    if (!id || !text) return;
+    const c = { id: 'cm' + Date.now(), userId: this.state.currentUserId, text, at: Date.now() };
+    this.setState(s => ({
+      clients: s.clients.map(x => x.id === id ? { ...x, comments: [...(x.comments || []), c] } : x),
+      commentDraft: '',
+    }));
+  };
+  closeClientModal = () => this.setState({ showClientModal: false, clientForm: null, editingId: null });
+  cf = (field) => (e) => this.setState(s => ({ clientForm: { ...s.clientForm, [field]: e.target.value } }));
+  saveClient = () => {
+    const f = this.state.clientForm;
+    if (!f || !f.nombre.trim()) return;
+    const editId = this.state.editingId;
+    if (editId) {
+      const now = Date.now();
+      this.setState(s => ({ clients: s.clients.map(c => {
+        if (c.id !== editId) return c;
+        const merged = { ...c, ...f };
+        if (f.columnId && f.columnId !== c.columnId) {
+          merged.stageEnteredAt = now;
+          merged.stageHistory = [...(c.stageHistory || []), { columnId: c.columnId, ownerId: c.ownerId, enteredAt: c.stageEnteredAt || now, exitedAt: now }];
+        }
+        return merged;
+      }), showClientModal: false, clientForm: null, editingId: null }));
+    } else {
+      const id = 'k' + Date.now();
+      this.setState(s => ({ clients: [...s.clients, { ...f, id, createdAt: Date.now(), comments: [], stageEnteredAt: Date.now(), stageHistory: [] }], showClientModal: false, clientForm: null, editingId: null }));
+    }
+  };
+
+  // ---------- user actions ----------
+  openUserModal = () => {
+    const sup = this.state.users.find(u => u.role === 'supervisor');
+    this.setState({ showUserModal: true, editingUserId: null, userForm: { name: '', title: '', role: 'user', supervisorId: sup ? sup.id : '', color: this.PALETTE[0] } });
+  };
+  openEditUser = (id) => {
+    const u = this.state.users.find(x => x.id === id);
+    if (!u) return;
+    this.setState({ showUserModal: true, editingUserId: id, userForm: { name: u.name, title: u.title || '', role: u.role, supervisorId: u.supervisorId || '', color: u.color } });
+  };
+  closeUserModal = () => this.setState({ showUserModal: false, userForm: null, editingUserId: null });
+  uf = (field) => (e) => this.setState(s => ({ userForm: { ...s.userForm, [field]: e.target.value } }));
+  ufColor = (color) => this.setState(s => ({ userForm: { ...s.userForm, color } }));
+  saveUser = () => {
+    const f = this.state.userForm;
+    if (!f || !f.name.trim()) return;
+    const base = { name: f.name.trim(), title: f.title.trim(), role: f.role, color: f.color, supervisorId: f.role === 'user' ? (f.supervisorId || null) : null };
+    const editId = this.state.editingUserId;
+    if (editId) {
+      this.setState(s => ({ users: s.users.map(u => u.id === editId ? { ...u, ...base } : u), showUserModal: false, userForm: null, editingUserId: null }));
+    } else {
+      const id = 'u' + Date.now();
+      this.setState(s => ({ users: [...s.users, { id, ...base }], showUserModal: false, userForm: null, editingUserId: null }));
+    }
+  };
+
+  openColumnModal = () => this.setState({ showColumnModal: true, columnForm: { name: '', color: this.PALETTE[0] } });
+  closeColumnModal = () => this.setState({ showColumnModal: false, columnForm: null });
+  colField = (field) => (v) => this.setState(s => ({ columnForm: { ...s.columnForm, [field]: v } }));
+  saveColumn = () => {
+    const f = this.state.columnForm;
+    if (!f || !f.name.trim()) return;
+    const id = 'col' + Date.now();
+    this.setState(s => ({ columns: [...s.columns, { id, name: f.name.trim(), color: f.color }], showColumnModal: false, columnForm: null }));
+  };
+  renameColumn = (id) => (e) => this.setState(s => ({ columns: s.columns.map(c => c.id === id ? { ...c, name: e.target.value } : c) }));
+  recolorColumn = (id, color) => this.setState(s => ({ columns: s.columns.map(c => c.id === id ? { ...c, color } : c) }));
+  deleteColumn = (id) => {
+    if (this.state.columns.length <= 1) return;
+    this.setState(s => {
+      const idx = s.columns.findIndex(c => c.id === id);
+      const fallback = s.columns[idx - 1] || s.columns[idx + 1];
+      return {
+        columns: s.columns.filter(c => c.id !== id),
+        clients: s.clients.map(c => c.columnId === id ? { ...c, columnId: fallback.id } : c),
+      };
+    });
+  };
+  moveColumn = (id, dir) => this.setState(s => {
+    const cols = [...s.columns];
+    const i = cols.findIndex(c => c.id === id);
+    const j = i + dir;
+    if (j < 0 || j >= cols.length) return {};
+    [cols[i], cols[j]] = [cols[j], cols[i]];
+    return { columns: cols };
+  });
+
+  addSource = () => this.setState(s => {
+    const n = s.sources.length + 1;
+    return { sources: [...s.sources, { id: 'src' + Date.now(), code: 'P' + n, label: '', color: this.PALETTE[(n - 1) % this.PALETTE.length] }] };
+  });
+  renameSource = (id) => (e) => this.setState(s => ({ sources: s.sources.map(x => x.id === id ? { ...x, label: e.target.value } : x) }));
+  recolorSource = (id, color) => this.setState(s => ({ sources: s.sources.map(x => x.id === id ? { ...x, color } : x) }));
+  askDeleteClient = (id) => (e) => { if (e) e.stopPropagation(); this.setState({ confirmDelClientId: id }); };
+  cancelDeleteClient = () => this.setState({ confirmDelClientId: null });
+  confirmDeleteClient = () => {
+    const id = this.state.confirmDelClientId;
+    if (!id) return;
+    this.setState(s => ({ clients: s.clients.filter(c => c.id !== id), confirmDelClientId: null }));
+  };
+  deleteSource = (id) => {
+    if (this.state.sources.length <= 1) return;
+    this.setState(s => ({ sources: s.sources.filter(x => x.id !== id) }));
+  };
+  moveSource = (id, dir) => this.setState(s => {
+    const a = [...s.sources];
+    const i = a.findIndex(x => x.id === id);
+    const j = i + dir;
+    if (j < 0 || j >= a.length) return {};
+    [a[i], a[j]] = [a[j], a[i]];
+    return { sources: a };
+  });
+
+  // ---------- style builders ----------
+  avatar(color, size, fs) {
+    return { width: size + 'px', height: size + 'px', borderRadius: '50%', flexShrink: 0, background: color, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: fs + 'px', fontWeight: 800, letterSpacing: '-.01em' };
+  }
+  srcBadge(meta) {
+    const color = meta ? meta.color : '#94A3B8';
+    return { display: 'inline-block', padding: '3px 9px', borderRadius: '7px', fontSize: '11.5px', fontWeight: 700, background: color + '1F', color };
+  }
+
+  buildBoardColumn(col, scopeClients, ac, density, bStyle, isAdmin, showOwner) {
+    const compact = density === 'compact';
+    const isOver = this.state.dragOverCol === col.id;
+    const width = compact ? 252 : 286;
+
+    let wrapStyle, headerStyle, dotStyle, countStyle, listStyle;
+    const sourceFilled = bStyle === 'acento';
+
+    if (bStyle === 'clasico') {
+      wrapStyle = { width: width + 'px', flexShrink: 0, display: 'flex', flexDirection: 'column', maxHeight: '100%', background: isOver ? '#EAF0FE' : '#EEF2F7', border: isOver ? ('1.5px solid ' + ac) : '1px solid #E2E8F0', borderRadius: '14px', transition: 'background .12s,border-color .12s' };
+      headerStyle = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 13px 10px' };
+      dotStyle = { width: '9px', height: '9px', borderRadius: '50%', background: col.color, flexShrink: 0 };
+      countStyle = { fontSize: '12px', fontWeight: 700, color: '#475569', background: '#fff', border: '1px solid #E2E8F0', borderRadius: '20px', minWidth: '22px', textAlign: 'center', padding: '1px 7px' };
+      listStyle = { display: 'flex', flexDirection: 'column', gap: compact ? '7px' : '9px', padding: '0 10px 12px', overflowY: 'auto', minHeight: '60px' };
+    } else if (bStyle === 'minimal') {
+      wrapStyle = { width: width + 'px', flexShrink: 0, display: 'flex', flexDirection: 'column', maxHeight: '100%', background: isOver ? 'rgba(37,99,235,.05)' : 'transparent', borderRadius: '12px', borderTop: '3px solid ' + col.color, transition: 'background .12s' };
+      headerStyle = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 6px 10px' };
+      dotStyle = { width: '0', height: '0' };
+      countStyle = { fontSize: '12px', fontWeight: 700, color: '#94A3B8' };
+      listStyle = { display: 'flex', flexDirection: 'column', gap: compact ? '7px' : '9px', padding: '0 2px 12px', overflowY: 'auto', minHeight: '60px' };
+    } else { // acento
+      wrapStyle = { width: width + 'px', flexShrink: 0, display: 'flex', flexDirection: 'column', maxHeight: '100%', background: '#fff', border: isOver ? ('1.5px solid ' + ac) : '1px solid #E7ECF3', borderRadius: '14px', overflow: 'hidden', boxShadow: '0 1px 2px rgba(15,23,42,.04)', transition: 'border-color .12s' };
+      headerStyle = { display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 14px', background: col.color, color: '#fff' };
+      dotStyle = { width: '0', height: '0' };
+      countStyle = { fontSize: '12px', fontWeight: 800, color: '#fff', background: 'rgba(255,255,255,.22)', borderRadius: '20px', minWidth: '22px', textAlign: 'center', padding: '1px 7px' };
+      listStyle = { display: 'flex', flexDirection: 'column', gap: compact ? '7px' : '9px', padding: '12px 11px', overflowY: 'auto', minHeight: '60px' };
+    }
+    // header text color override for acento (white)
+    if (bStyle === 'acento') headerStyle.color = '#fff';
+
+    const cards = scopeClients.filter(c => c.columnId === col.id).map(c => this.buildCard(c, col, ac, density, bStyle, showOwner, sourceFilled));
+
+    return {
+      id: col.id, name: col.name, color: col.color, count: cards.length, cards,
+      wrapStyle, headerStyle, dotStyle, countStyle, listStyle,
+      empty: cards.length === 0,
+      canAdd: this.isAdmin() || this.isSupervisor(),
+      onAdd: () => this.openClientModal(col.id),
+      onDragOver: (e) => { e.preventDefault(); if (e.dataTransfer) e.dataTransfer.dropEffect = 'move'; if (this.state.dragOverCol !== col.id) this.setState({ dragOverCol: col.id }); },
+      onDragLeave: () => {},
+      onDrop: (e) => { e.preventDefault(); this.moveClient(this.state.draggingId, col.id); },
+    };
+  }
+
+  buildCard(c, col, ac, density, bStyle, showOwner, sourceFilled) {
+    const compact = density === 'compact';
+    const meta = this.srcById(c.source);
+    const owner = this.state.users.find(u => u.id === c.ownerId);
+    const dragging = this.state.draggingId === c.id;
+    const headerTextColor = (bStyle === 'acento') ? '#fff' : '#0F172A';
+
+    let style;
+    if (bStyle === 'minimal') {
+      style = { background: '#fff', border: '1px solid #E6ECF3', borderRadius: '11px', padding: compact ? '9px 11px' : '12px 13px', cursor: 'grab', opacity: dragging ? .4 : 1, transition: 'box-shadow .12s,transform .05s', borderLeft: '3px solid ' + col.color };
+    } else if (bStyle === 'acento') {
+      style = { background: '#fff', border: '1px solid #EEF2F7', borderRadius: '11px', padding: compact ? '9px 11px' : '12px 13px', cursor: 'grab', opacity: dragging ? .4 : 1, boxShadow: '0 1px 3px rgba(15,23,42,.07)', transition: 'box-shadow .12s,transform .05s' };
+    } else {
+      style = { background: '#fff', border: '1px solid #E8EDF3', borderLeft: '3px solid ' + col.color, borderRadius: '10px', padding: compact ? '9px 11px' : '12px 13px', cursor: 'grab', opacity: dragging ? .4 : 1, boxShadow: '0 1px 2px rgba(15,23,42,.05)', transition: 'box-shadow .12s,transform .05s' };
+    }
+
+    return {
+      id: c.id,
+      fullName: (c.nombre + ' ' + c.apellidos).trim(),
+      email: c.email || '—',
+      phone: c.telefono || '—',
+      srcLabel: meta ? meta.code : '—',
+      srcStyle: this.srcBadge(meta),
+      showContact: !compact,
+      showOwner: showOwner,
+      ownerInitials: owner ? this.initials(owner.name) : '',
+      ownerName: owner ? owner.name : '',
+      ownerStyle: owner ? this.avatar(owner.color, 24, 10) : {},
+      style,
+      hover: { boxShadow: '0 6px 18px rgba(15,23,42,.12)', transform: 'translateY(-1px)' },
+      onClick: () => this.openEditClient(c.id),
+      onDragStart: (e) => { this.setState({ draggingId: c.id }); if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'move'; try { e.dataTransfer.setData('text/plain', c.id); } catch (_) {} } },
+      onDragEnd: () => this.setState({ draggingId: null, dragOverCol: null }),
+    };
+  }
+
+  navItem(id, ac) {
+    const active = this.state.activeSection === id;
+    return {
+      onClick: () => this.goTo(id),
+      style: { display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 12px', borderRadius: '10px', cursor: 'pointer', fontSize: '14px', fontWeight: active ? 700 : 600, color: active ? '#fff' : '#D9A95E', background: active ? ac : 'transparent', transition: 'all .14s', userSelect: 'none' },
+      hover: active ? {} : { background: 'rgba(255,255,255,.06)', color: '#fff' },
+    };
+  }
+
+  renderVals() {
+    const S = this.state;
+    const winW = S.winW || 1280;
+    const isMobile = winW < 760;
+    const isTablet = winW < 1100;
+    const ac = this.effAccent();
+    const density = this.effDensity();
+    const bStyle = this.effStyle();
+    const user = this.curUser();
+    const isAdmin = this.isAdmin();
+    const isSup = this.isSupervisor();
+    const isEditor = this.isEditor();
+    const canFilter = isAdmin || isSup;
+    const teamIds = this.managedIds();
+    const roleText = (r) => r === 'admin' ? 'Admin' : r === 'supervisor' ? 'Supervisor' : r === 'editor' ? 'Editor' : 'Asesor';
+    const roleBadgeStyle = (r) => {
+      const map = { admin: { bg: '#EEF4FF', fg: ac }, supervisor: { bg: '#F3EEFF', fg: '#7C3AED' }, editor: { bg: '#FEF3E2', fg: '#D97706' }, user: { bg: '#F1F5F9', fg: '#64748B' } };
+      const m = map[r] || map.user;
+      return { fontSize: '11px', fontWeight: 800, padding: '3px 9px', borderRadius: '20px', background: m.bg, color: m.fg };
+    };
+
+    // ---------- LOGIN ----------
+    const loginProfiles = S.users.map(u => {
+      const sel = S.loginPick === u.id;
+      return {
+        id: u.id, name: u.name, title: u.title, initials: this.initials(u.name),
+        roleLabel: roleText(u.role),
+        onPick: () => this.pickLogin(u.id),
+        style: { display: 'flex', alignItems: 'center', gap: '12px', padding: '11px 13px', borderRadius: '12px', cursor: 'pointer', border: sel ? ('2px solid ' + ac) : '2px solid #EAEEF4', background: sel ? '#F5F8FF' : '#fff', transition: 'all .12s' },
+        avatar: this.avatar(u.color, 38, 13),
+        badge: roleBadgeStyle(u.role),
+      };
+    });
+    const pickedUser = S.users.find(u => u.id === S.loginPick) || S.users[0];
+    const loginEmail = pickedUser ? (pickedUser.name.toLowerCase().split(' ')[0] + '@grupo-juridico.com') : '';
+    const loginBtnStyle = { width: '100%', padding: '14px', border: 'none', borderRadius: '11px', background: '#0B1220', color: '#fff', fontSize: '15px', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', boxShadow: '0 8px 22px rgba(11,18,32,.35)' };
+    const showLoginAside = !isMobile;
+    const loginFormStyle = { width: isMobile ? '100%' : '480px', maxWidth: isMobile ? '100%' : '46%', background: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', overflowY: 'auto', height: '100vh', padding: isMobile ? '32px 22px' : '40px 52px' };
+
+    if (!user) {
+      return { showLogin: true, showApp: false, loginProfiles, loginEmail, loginBtnStyle, showLoginAside, loginFormStyle, onLogin: () => this.login(S.loginPick) };
+    }
+
+    // ---------- APP CHROME ----------
+    const me = {
+      name: user.name, initials: this.initials(user.name),
+      roleLabel: isAdmin ? 'Administrador' : (isSup ? 'Supervisor' : (isEditor ? 'Editor' : user.title)),
+      avatarStyle: this.avatar(user.color, 34, 12.5),
+      avatarBigStyle: this.avatar(user.color, 52, 18),
+    };
+
+    const nav = {
+      dashboard: this.navItem('dashboard', ac),
+      board: this.navItem('board', ac),
+      clients: this.navItem('clients', ac),
+      users: this.navItem('users', ac),
+      config: this.navItem('config', ac),
+      settings: this.navItem('settings', ac),
+    };
+
+    const sec = S.activeSection;
+    const titles = {
+      dashboard: ['Panel', isAdmin ? 'Resumen de todo el equipo' : (isSup ? 'Resumen de tu equipo' : 'Resumen de tu actividad')],
+      board: ['Tablero', 'Arrastra los clientes entre etapas del pipeline'],
+      clients: ['Clientes', isAdmin ? 'Todos los clientes del equipo' : (isSup ? 'Clientes de tu equipo' : 'Tus clientes asignados')],
+      users: ['Usuarios', isAdmin ? 'Equipo de asesores y su actividad' : 'Tu equipo de asesores'],
+      config: ['Configuración del tablero', 'Define las etapas del pipeline'],
+      settings: ['Ajustes', 'Apariencia y preferencias'],
+    };
+    const t = titles[sec] || ['', ''];
+    const addBtnStyle = { display: 'inline-flex', alignItems: 'center', gap: isMobile ? '0' : '7px', padding: isMobile ? '10px 12px' : '10px 16px', border: 'none', borderRadius: '10px', background: ac, color: '#fff', fontSize: '13.5px', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 12px ' + ac + '40' };
+
+    const header = {
+      title: t[0], subtitle: t[1],
+      showAdd: sec === 'clients' ? (canFilter || isEditor) : (sec === 'board' ? canFilter : (sec === 'users' ? isAdmin : false)),
+      onAdd: () => sec === 'users' ? this.openUserModal() : this.openClientModal(null),
+      addLabel: sec === 'users' ? 'Nuevo usuario' : 'Nuevo cliente',
+      addBtnStyle,
+    };
+
+    const sidebarBase = { background: '#0A0A0A', color: '#fff', display: 'flex', flexDirection: 'column', padding: '18px 14px' };
+    const sidebarStyle = isMobile
+      ? { ...sidebarBase, position: 'fixed', top: 0, left: 0, bottom: 0, width: '256px', zIndex: 60, transform: S.sidebarOpen ? 'translateX(0)' : 'translateX(-100%)', transition: 'transform .22s ease', boxShadow: S.sidebarOpen ? '0 0 40px rgba(0,0,0,.45)' : 'none' }
+      : { ...sidebarBase, width: '248px', flexShrink: 0 };
+    const headerStyle = { height: '68px', flexShrink: 0, background: '#fff', borderBottom: '1px solid #E7ECF3', display: 'flex', alignItems: 'center', padding: isMobile ? '0 14px' : '0 26px', gap: isMobile ? '12px' : '18px' };
+    const dashWrapStyle = { padding: isMobile ? '16px 14px' : '26px' };
+    const secWrapStyle = { padding: isMobile ? '16px 14px 24px' : '22px 26px 30px' };
+    const configWrapStyle = { padding: isMobile ? '16px 14px 24px' : '22px 26px 30px', maxWidth: '720px', display: 'flex', flexDirection: 'column', gap: '16px' };
+    const boardWrapStyle = { flex: 1, minHeight: 0, overflowX: 'auto', overflowY: 'hidden', padding: isMobile ? '14px' : '16px 26px 26px' };
+    const boardFilterStyle = { display: 'flex', alignItems: 'center', gap: '8px', padding: isMobile ? '14px 14px 4px' : '16px 26px 4px', flexWrap: 'wrap' };
+    const metricsGridCols = isMobile ? 'repeat(2,1fr)' : 'repeat(4,1fr)';
+    const formRowStyle = { display: 'flex', gap: '13px', flexDirection: isMobile ? 'column' : 'row' };
+    const showFullTable = !isMobile;
+    const showChipText = !isMobile;
+
+    // scope of clients for current view
+    const ownScope = (isAdmin || isEditor) ? S.clients : S.clients.filter(c => teamIds.includes(c.ownerId));
+
+    // ---------- BOARD ----------
+    let boardScope = ownScope;
+    if (canFilter && S.boardFilter !== 'all') boardScope = ownScope.filter(c => c.ownerId === S.boardFilter);
+    const showOwnerOnCard = canFilter && S.boardFilter === 'all';
+
+    const filterChips = [{ id: 'all', name: 'Todos' }, ...S.users.filter(u => u.role === 'user' && teamIds.includes(u.id)).map(u => ({ id: u.id, name: u.name.split(' ')[0] }))].map(f => {
+      const on = S.boardFilter === f.id;
+      return { label: f.name, onClick: () => this.setFilter(f.id), style: { padding: '6px 13px', borderRadius: '20px', fontSize: '12.5px', fontWeight: 700, cursor: 'pointer', border: on ? ('1.5px solid ' + ac) : '1.5px solid #E2E8F0', background: on ? ac : '#fff', color: on ? '#fff' : '#475569', transition: 'all .12s' } };
+    });
+
+    const boardColumns = S.columns.map(col => this.buildBoardColumn(col, boardScope, ac, density, bStyle, isAdmin, showOwnerOnCard));
+
+    // ---------- CLIENTS LIST ----------
+    const q = S.search.trim().toLowerCase();
+    const listScope = ownScope.filter(c => {
+      if (!q) return true;
+      return (c.nombre + ' ' + c.apellidos).toLowerCase().includes(q) || (c.email || '').toLowerCase().includes(q);
+    });
+    const colById = Object.fromEntries(S.columns.map(c => [c.id, c]));
+    const clientRows = listScope.map(c => {
+      const meta = this.srcById(c.source);
+      const owner = S.users.find(u => u.id === c.ownerId);
+      const stage = colById[c.columnId];
+      return {
+        id: c.id, onEdit: () => this.openEditClient(c.id), ingresoLabel: this.fmtDateShort(c.createdAt),
+        canDelete: isAdmin || isSup,
+        onDelete: this.askDeleteClient(c.id),
+        delStyle: { width: '30px', height: '30px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px', cursor: 'pointer', color: '#94A3B8' },
+        fullName: (c.nombre + ' ' + c.apellidos).trim(), email: c.email || '—', phone: c.telefono || '—',
+        initials: this.initials((c.nombre + ' ' + c.apellidos).trim()), avatarStyle: this.avatar(owner ? owner.color : '#94A3B8', 32, 11.5),
+        srcLabel: meta ? meta.code : '—', srcStyle: this.srcBadge(meta),
+        stageName: stage ? stage.name : '—',
+        stageStyle: { display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', borderRadius: '7px', fontSize: '12px', fontWeight: 700, whiteSpace: 'nowrap', background: (stage ? stage.color : '#94A3B8') + '18', color: stage ? stage.color : '#64748B' },
+        ownerName: owner ? owner.name : '—', ownerInitials: owner ? this.initials(owner.name) : '', ownerStyle: this.avatar(owner ? owner.color : '#94A3B8', 26, 10.5),
+      };
+    });
+    const tableHeadStyle = { display: 'flex', alignItems: 'center', padding: '12px 18px', background: '#F8FAFC', fontSize: '11.5px', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', letterSpacing: '.04em' };
+
+    // ---------- USERS ----------
+    const wonCol = S.columns[S.columns.length - 1];
+    const roleOrder = { admin: 0, supervisor: 1, user: 2 };
+    const userRows = [...S.users].sort((a, b) => roleOrder[a.role] - roleOrder[b.role]).map(u => {
+      const scope = u.role === 'admin'
+        ? S.clients
+        : (u.role === 'supervisor'
+            ? S.clients.filter(c => S.users.some(x => x.id === c.ownerId && x.supervisorId === u.id))
+            : S.clients.filter(c => c.ownerId === u.id));
+      const won = scope.filter(c => wonCol && c.columnId === wonCol.id).length;
+      let teamLabel;
+      if (u.role === 'admin') teamLabel = 'Toda la organización';
+      else if (u.role === 'supervisor') { const n = S.users.filter(x => x.role === 'user' && x.supervisorId === u.id).length; teamLabel = n + (n === 1 ? ' asesor' : ' asesores'); }
+      else { const sup = S.users.find(x => x.id === u.supervisorId); teamLabel = sup ? sup.name : '—'; }
+      return {
+        id: u.id, onEdit: () => this.openEditUser(u.id),
+        name: u.name, title: u.title || '—', initials: this.initials(u.name), avatarStyle: this.avatar(u.color, 32, 11.5),
+        roleLabel: roleText(u.role), roleBadge: roleBadgeStyle(u.role),
+        teamLabel, total: scope.length, won,
+      };
+    });
+
+    // ---------- CONFIG ----------
+    const arrowBase = { fontSize: '8px', lineHeight: 1, cursor: 'pointer', color: '#94A3B8', userSelect: 'none' };
+    const configColumns = S.columns.map((col, i) => {
+      const cnt = S.clients.filter(c => c.columnId === col.id).length;
+      const canDel = S.columns.length > 1;
+      return {
+        id: col.id, name: col.name, count: cnt,
+        onRename: this.renameColumn(col.id),
+        onUp: () => this.moveColumn(col.id, -1), onDown: () => this.moveColumn(col.id, 1),
+        upStyle: { ...arrowBase, opacity: i === 0 ? .25 : 1, pointerEvents: i === 0 ? 'none' : 'auto' },
+        downStyle: { ...arrowBase, opacity: i === S.columns.length - 1 ? .25 : 1, pointerEvents: i === S.columns.length - 1 ? 'none' : 'auto' },
+        onDelete: () => canDel && this.deleteColumn(col.id),
+        delStyle: { width: '32px', height: '32px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px', cursor: canDel ? 'pointer' : 'not-allowed', color: canDel ? '#DC2626' : '#CBD5E1', background: canDel ? '#FEF2F2' : '#F8FAFC' },
+        swatches: this.PALETTE.slice(0, 6).map(color => ({
+          onClick: () => this.recolorColumn(col.id, color),
+          style: { width: '17px', height: '17px', borderRadius: '5px', cursor: 'pointer', background: color, boxShadow: col.color === color ? '0 0 0 2px #fff,0 0 0 4px ' + color : 'none' },
+        })),
+      };
+    });
+
+    const configSources = S.sources.map((src, i) => {
+      const cnt = S.clients.filter(c => c.source === src.id).length;
+      const canDel = S.sources.length > 1;
+      return {
+        id: src.id, code: src.code, label: src.label, count: cnt,
+        onRename: this.renameSource(src.id),
+        onUp: () => this.moveSource(src.id, -1), onDown: () => this.moveSource(src.id, 1),
+        upStyle: { ...arrowBase, opacity: i === 0 ? .25 : 1, pointerEvents: i === 0 ? 'none' : 'auto' },
+        downStyle: { ...arrowBase, opacity: i === S.sources.length - 1 ? .25 : 1, pointerEvents: i === S.sources.length - 1 ? 'none' : 'auto' },
+        onDelete: () => canDel && this.deleteSource(src.id),
+        delStyle: { width: '32px', height: '32px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px', cursor: canDel ? 'pointer' : 'not-allowed', color: canDel ? '#DC2626' : '#CBD5E1', background: canDel ? '#FEF2F2' : '#F8FAFC' },
+        codeStyle: { fontSize: '11px', fontWeight: 800, color: '#fff', background: src.color, borderRadius: '6px', padding: '4px 8px', minWidth: '36px', textAlign: 'center', flexShrink: 0 },
+        swatches: this.PALETTE.slice(0, 6).map(color => ({
+          onClick: () => this.recolorSource(src.id, color),
+          style: { width: '17px', height: '17px', borderRadius: '5px', cursor: 'pointer', background: color, boxShadow: src.color === color ? '0 0 0 2px #fff,0 0 0 4px ' + color : 'none' },
+        })),
+      };
+    });
+
+    // ---------- DASHBOARD ----------
+    let dashScope = ownScope;
+    if (canFilter && S.panelFilter !== 'all') dashScope = ownScope.filter(c => c.ownerId === S.panelFilter);
+    const panelChips = [{ id: 'all', name: 'Todos' }, ...S.users.filter(u => u.role === 'user' && teamIds.includes(u.id)).map(u => ({ id: u.id, name: u.name.split(' ')[0] }))].map(f => {
+      const on = S.panelFilter === f.id;
+      return { label: f.name, onClick: () => this.setPanelFilter(f.id), style: { padding: '6px 13px', borderRadius: '20px', fontSize: '12.5px', fontWeight: 700, cursor: 'pointer', border: on ? ('1.5px solid ' + ac) : '1.5px solid #E2E8F0', background: on ? ac : '#fff', color: on ? '#fff' : '#475569', transition: 'all .12s', whiteSpace: 'nowrap' } };
+    });
+    const total = dashScope.length;
+    const won = dashScope.filter(c => wonCol && c.columnId === wonCol.id).length;
+    const activos = total - won;
+    const conv = total ? Math.round((won / total) * 100) : 0;
+    const metrics = [
+      { label: 'Total clientes', value: String(total), sub: isAdmin ? 'Todo el equipo' : 'Asignados a ti', color: '#0F172A' },
+      { label: 'En proceso', value: String(activos), sub: 'Activos en pipeline', color: ac },
+      { label: 'Cerrados ganados', value: String(won), sub: wonCol ? wonCol.name : '', color: '#16A34A' },
+      { label: 'Conversión', value: conv + '%', sub: 'Ganados / total', color: '#7C3AED' },
+    ];
+    const stageCounts = S.columns.map(col => ({ name: col.name, color: col.color, count: dashScope.filter(c => c.columnId === col.id).length }));
+    const maxStage = Math.max(1, ...stageCounts.map(s => s.count));
+    const byStage = stageCounts.map(s => ({ name: s.name, count: s.count, fill: { width: Math.round(s.count / maxStage * 100) + '%', height: '100%', background: s.color, borderRadius: '6px', transition: 'width .3s' } }));
+
+    const srcCounts = S.sources.map(src => ({ src, count: dashScope.filter(c => c.source === src.id).length })).filter(s => s.count > 0);
+    const maxSrc = Math.max(1, ...srcCounts.map(s => s.count));
+    const bySource = srcCounts.map(s => ({ name: s.src.code + ' · ' + s.src.label, count: s.count, dot: { width: '9px', height: '9px', borderRadius: '50%', background: s.src.color }, fill: { width: Math.round(s.count / maxSrc * 100) + '%', height: '100%', background: s.src.color, borderRadius: '6px', transition: 'width .3s' } }));
+
+    const userCounts = S.users.filter(u => u.role === 'user' && teamIds.includes(u.id) && (S.panelFilter === 'all' || u.id === S.panelFilter)).map(u => ({ u, count: dashScope.filter(c => c.ownerId === u.id).length }));
+    const maxU = Math.max(1, ...userCounts.map(s => s.count));
+    const byUser = userCounts.map(s => ({ name: s.u.name, count: s.count, dot: { width: '9px', height: '9px', borderRadius: '50%', background: s.u.color }, fill: { width: Math.round(s.count / maxU * 100) + '%', height: '100%', background: s.u.color, borderRadius: '6px', transition: 'width .3s' } }));
+    const dashGridCols = isMobile ? '1fr' : (isTablet ? 'repeat(2,1fr)' : (canFilter ? 'repeat(3,1fr)' : 'repeat(2,1fr)'));
+
+    // ---------- STAGE TIMING REPORT (supervisor + admin only) ----------
+    const HOURMS = 3600 * 1000;
+    const fmtHrs = (h) => h < 1 ? '< 1 h' : (h < 24 ? Math.round(h) + ' h' : Math.floor(h / 24) + ' d ' + Math.round(h % 24) + ' h');
+    const segsOf = (c) => {
+      const out = (c.stageHistory || []).map(g => ({ columnId: g.columnId, ownerId: g.ownerId, hrs: Math.max(0, (g.exitedAt - g.enteredAt)) / HOURMS }));
+      if (c.stageEnteredAt) out.push({ columnId: c.columnId, ownerId: c.ownerId, hrs: Math.max(0, (Date.now() - c.stageEnteredAt)) / HOURMS });
+      return out;
+    };
+    const allSegs = [];
+    dashScope.forEach(c => segsOf(c).forEach(g => allSegs.push(g)));
+    const stageTime = S.columns.map(col => {
+      const segs = allSegs.filter(g => g.columnId === col.id);
+      const avg = segs.length ? segs.reduce((a, b) => a + b.hrs, 0) / segs.length : 0;
+      return { name: col.name, color: col.color, avg };
+    });
+    const maxStageAvg = Math.max(1, ...stageTime.map(s => s.avg));
+    const stageTimeBars = stageTime.map(s => ({ name: s.name, label: s.avg > 0 ? fmtHrs(s.avg) : '—', fill: { width: Math.round(s.avg / maxStageAvg * 100) + '%', height: '100%', background: s.color, borderRadius: '6px', transition: 'width .3s' } }));
+    const bn = stageTime.slice().sort((a, b) => b.avg - a.avg)[0];
+    const bottleneckLabel = (bn && bn.avg > 0) ? (bn.name + ' · ' + fmtHrs(bn.avg)) : '—';
+    const advTime = S.users.filter(u => u.role === 'user' && teamIds.includes(u.id) && (S.panelFilter === 'all' || u.id === S.panelFilter)).map(u => {
+      const segs = allSegs.filter(g => g.ownerId === u.id);
+      const avg = segs.length ? segs.reduce((a, b) => a + b.hrs, 0) / segs.length : 0;
+      let slow = null, slowAvg = -1;
+      S.columns.forEach(col => { const cs = segs.filter(g => g.columnId === col.id); if (cs.length) { const a = cs.reduce((x, y) => x + y.hrs, 0) / cs.length; if (a > slowAvg) { slowAvg = a; slow = col; } } });
+      return { id: u.id, name: u.name, dot: { width: '9px', height: '9px', borderRadius: '50%', background: u.color, flexShrink: 0 }, avg, avgLabel: segs.length ? fmtHrs(avg) : '—', slowName: slow ? slow.name : '—' };
+    }).sort((a, b) => b.avg - a.avg);
+    const timingGridCols = (isMobile || isTablet || !canFilter) ? '1fr' : '1.1fr 1fr';
+    const showStageTiming = !isEditor;
+
+    // ---------- SETTINGS ----------
+    const segActive = (on) => ({ padding: '9px 16px', borderRadius: '9px', fontSize: '13.5px', fontWeight: 700, cursor: 'pointer', border: on ? ('1.5px solid ' + ac) : '1.5px solid #E2E8F0', background: on ? ac : '#fff', color: on ? '#fff' : '#475569', transition: 'all .12s' });
+    const densityOpts = [{ id: 'comfortable', label: 'Cómodas' }, { id: 'compact', label: 'Compactas' }].map(d => ({ label: d.label, onClick: () => this.setDensity(d.id), style: segActive(density === d.id) }));
+
+    const styleDefs = [
+      { id: 'clasico', label: 'Clásico', desc: 'Columnas suaves' },
+      { id: 'minimal', label: 'Minimal', desc: 'Limpio y plano' },
+      { id: 'acento', label: 'Acento', desc: 'Cabecera con color' },
+    ];
+    const previewCol = (variant, color) => {
+      if (variant === 'minimal') return { flex: 1, borderRadius: '5px', background: '#F8FAFC', borderTop: '3px solid ' + color };
+      if (variant === 'acento') return { flex: 1, borderRadius: '5px', background: '#fff', border: '1px solid #E7ECF3', borderTop: '8px solid ' + color };
+      return { flex: 1, borderRadius: '5px', background: '#EEF2F7', borderLeft: '3px solid ' + color };
+    };
+    const palette3 = ['#2563EB', '#D97706', '#16A34A'];
+    const styleOpts = styleDefs.map(o => {
+      const on = bStyle === o.id;
+      return {
+        label: o.label, desc: o.desc, onClick: () => this.setBoardStyle(o.id),
+        style: { padding: '14px', borderRadius: '13px', cursor: 'pointer', border: on ? ('2px solid ' + ac) : '2px solid #EAEEF4', background: on ? '#F5F8FF' : '#fff', transition: 'all .12s' },
+        p1: previewCol(o.id, palette3[0]), p2: previewCol(o.id, palette3[1]), p3: previewCol(o.id, palette3[2]),
+      };
+    });
+
+    const accentChoices = ['#AC740E', '#2563EB', '#0F766E', '#7C3AED', '#EA580C', '#0891B2', '#E11D48'];
+    const accentOpts = accentChoices.map(color => ({ onClick: () => this.setAccent(color), style: { width: '34px', height: '34px', borderRadius: '10px', cursor: 'pointer', background: color, boxShadow: ac === color ? '0 0 0 2px #fff,0 0 0 4px ' + color : 'none', transition: 'box-shadow .12s' } }));
+
+    // ---------- USER MENU ----------
+    const switchUsers = S.users.map(u => ({
+      name: u.name, initials: this.initials(u.name), roleLabel: u.role === 'admin' ? 'Administrador' : (u.role === 'supervisor' ? 'Supervisor' : (u.role === 'editor' ? 'Editor' : u.title)),
+      current: u.id === S.currentUserId, avatarStyle: this.avatar(u.color, 30, 11.5),
+      onClick: () => this.login(u.id),
+      style: { display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 10px', borderRadius: '9px', cursor: 'pointer', background: u.id === S.currentUserId ? '#F5F8FF' : 'transparent' },
+    }));
+
+    // ---------- MODALS ----------
+    const inputStyle = { width: '100%', padding: '9px 13px', border: '1px solid #E2E8F0', borderRadius: '10px', fontSize: '14px', color: '#0F172A', background: '#fff' };
+    const lockedInputStyle = { ...inputStyle, background: '#F1F5F9', color: '#64748B', cursor: 'not-allowed' };
+    const canEditBasics = canFilter || isEditor;
+    const basicInputStyle = canEditBasics ? inputStyle : lockedInputStyle;
+    const cform = S.clientForm || { nombre: '', apellidos: '', email: '', telefono: '', whatsapp: '', source: '', columnId: '', ownerId: '' };
+    const canSave = !!cform_valid(cform);
+    function cform_valid(f) { return f && f.nombre && f.nombre.trim(); }
+    const editRec = S.editingId ? S.clients.find(c => c.id === S.editingId) : null;
+    const editComments = (editRec && editRec.comments ? editRec.comments : []).map(cm => {
+      const au = S.users.find(u => u.id === cm.userId);
+      return { id: cm.id, author: au ? au.name : 'Usuario', initials: au ? this.initials(au.name) : '?', avatarStyle: this.avatar(au ? au.color : '#94A3B8', 28, 11), when: this.fmtDateShort(cm.at), text: cm.text };
+    });
+    const cmDraft = S.commentDraft || '';
+    const clientModal = {
+      title: S.editingId ? (canEditBasics ? 'Editar cliente' : 'Información del cliente') : 'Nuevo cliente',
+      saveLabel: S.editingId ? 'Guardar cambios' : 'Guardar cliente',
+      isEdit: !!S.editingId,
+      basicReadOnly: !canEditBasics,
+      basicDisabled: !canEditBasics,
+      basicInputStyle,
+      createdLabel: editRec ? this.fmtDateTime(editRec.createdAt) : '',
+      comments: editComments,
+      hasComments: editComments.length > 0,
+      commentDraft: cmDraft,
+      onCommentDraft: this.setCommentDraft,
+      onAddComment: this.addComment,
+      commentBtnStyle: { padding: '9px 15px', border: 'none', borderRadius: '9px', background: cmDraft.trim() ? ac : '#CBD5E1', color: '#fff', fontSize: '13px', fontWeight: 700, cursor: cmDraft.trim() ? 'pointer' : 'not-allowed', flexShrink: 0 },
+      form: cform_valid(cform) || true ? cform : cform,
+      sources: S.sources.map(x => ({ id: x.id, label: x.code + ' - ' + x.label })),
+      columns: S.columns.map(c => ({ id: c.id, name: c.name })),
+      owners: (isEditor ? S.users.filter(u => u.role === 'supervisor') : S.users.filter(u => u.role === 'user' && teamIds.includes(u.id))).map(u => ({ id: u.id, name: u.name })),
+      showOwner: canFilter || isEditor,
+      ownerLabel: isEditor ? 'Supervisora asignada' : 'Asesor asignado',
+      onNombre: this.cf('nombre'), onApellidos: this.cf('apellidos'), onEmail: this.cf('email'), onTelefono: this.cf('telefono'), onWhatsapp: this.cf('whatsapp'),
+      onSource: this.cf('source'), onColumn: this.cf('columnId'), onOwner: this.cf('ownerId'),
+      onClose: this.closeClientModal, onSave: this.saveClient,
+      saveStyle: { padding: '11px 20px', border: 'none', borderRadius: '10px', background: canSave ? ac : '#CBD5E1', color: '#fff', fontSize: '14px', fontWeight: 700, cursor: canSave ? 'pointer' : 'not-allowed', boxShadow: canSave ? '0 4px 12px ' + ac + '40' : 'none' },
+    };
+
+    const colForm = S.columnForm || { name: '', color: this.PALETTE[0] };
+    const colCanSave = !!(colForm.name && colForm.name.trim());
+    const columnModal = {
+      form: colForm,
+      onName: (e) => this.colField('name')(e.target.value),
+      swatches: this.PALETTE.map(color => ({ onClick: () => this.colField('color')(color), style: { width: '32px', height: '32px', borderRadius: '9px', cursor: 'pointer', background: color, boxShadow: colForm.color === color ? '0 0 0 2px #fff,0 0 0 4px ' + color : 'none' } })),
+      onClose: this.closeColumnModal, onSave: this.saveColumn,
+      saveStyle: { padding: '11px 20px', border: 'none', borderRadius: '10px', background: colCanSave ? ac : '#CBD5E1', color: '#fff', fontSize: '14px', fontWeight: 700, cursor: colCanSave ? 'pointer' : 'not-allowed' },
+    };
+
+    // ---------- USER MODAL ----------
+    const uform = S.userForm || { name: '', title: '', role: 'user', supervisorId: '', color: this.PALETTE[0] };
+    const uCanSave = !!(uform.name && uform.name.trim());
+    const userModal = {
+      title: S.editingUserId ? 'Editar usuario' : 'Nuevo usuario',
+      saveLabel: S.editingUserId ? 'Guardar cambios' : 'Crear usuario',
+      form: uform,
+      showSupervisor: uform.role === 'user',
+      roleOptions: [{ id: 'admin', label: 'Administrador' }, { id: 'supervisor', label: 'Supervisor' }, { id: 'editor', label: 'Editor' }, { id: 'user', label: 'Asesor' }],
+      supervisors: S.users.filter(u => u.role === 'supervisor').map(u => ({ id: u.id, name: u.name })),
+      onName: this.uf('name'), onTitle: this.uf('title'), onRole: this.uf('role'), onSupervisor: this.uf('supervisorId'),
+      swatches: this.PALETTE.map(color => ({ onClick: () => this.ufColor(color), style: { width: '32px', height: '32px', borderRadius: '9px', cursor: 'pointer', background: color, boxShadow: uform.color === color ? '0 0 0 2px #fff,0 0 0 4px ' + color : 'none' } })),
+      onClose: this.closeUserModal, onSave: this.saveUser,
+      saveStyle: { padding: '11px 20px', border: 'none', borderRadius: '10px', background: uCanSave ? ac : '#CBD5E1', color: '#fff', fontSize: '14px', fontWeight: 700, cursor: uCanSave ? 'pointer' : 'not-allowed' },
+    };
+
+    // ---------- CLIENT DETAIL ----------
+    const detailRec = S.detailId ? S.clients.find(c => c.id === S.detailId) : null;
+    let clientDetail = null;
+    if (detailRec) {
+      const meta = this.srcById(detailRec.source);
+      const owner = S.users.find(u => u.id === detailRec.ownerId);
+      const stage = colById[detailRec.columnId];
+      const sColor = stage ? stage.color : '#94A3B8';
+      const mColor = meta ? meta.color : '#94A3B8';
+      clientDetail = {
+        fullName: (detailRec.nombre + ' ' + detailRec.apellidos).trim(),
+        initials: this.initials((detailRec.nombre + ' ' + detailRec.apellidos).trim()),
+        avatarStyle: this.avatar(owner ? owner.color : '#94A3B8', 52, 18),
+        email: detailRec.email || '—',
+        phone: detailRec.telefono || '—',
+        whatsapp: detailRec.whatsapp || '—',
+        sourceLabel: meta ? (meta.code + ' · ' + meta.label) : '—',
+        sourceStyle: { display: 'inline-block', padding: '5px 12px', borderRadius: '8px', fontSize: '12.5px', fontWeight: 700, background: mColor + '1F', color: mColor, textAlign: 'right' },
+        stageName: stage ? stage.name : '—',
+        stageStyle: { display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 11px', borderRadius: '7px', fontSize: '12px', fontWeight: 700, background: sColor + '1F', color: sColor },
+        ownerName: owner ? owner.name : '—',
+        ownerInitials: owner ? this.initials(owner.name) : '',
+        ownerStyle: this.avatar(owner ? owner.color : '#94A3B8', 26, 10.5),
+        onClose: this.closeClientDetail,
+      };
+    }
+
+    return {
+      showLogin: false, showApp: true, isAdmin, showWorkspaceNav: !isEditor, showBoardFilter: canFilter, showUsersNav: isAdmin, showByUser: canFilter,
+      me, nav, header, isMobile, showChipText,
+      sidebarStyle, headerStyle, sidebarOpen: S.sidebarOpen, onToggleSidebar: this.toggleSidebar, closeSidebar: this.closeSidebar,
+      dashWrapStyle, secWrapStyle, configWrapStyle, boardWrapStyle, boardFilterStyle, metricsGridCols, formRowStyle,
+      showFullTable, showAsesorCol: isAdmin && !isMobile,
+      chipHover: { background: '#F1F5F9' },
+      rowHover: { background: '#F8FAFC' },
+      addColHover: { background: '#F8FAFC', borderColor: '#C3CEDE' },
+      logoutHover: { background: '#FEF2F2' },
+      onToggleMenu: this.toggleMenu, onCloseMenu: this.closeMenu, showUserMenu: S.showUserMenu,
+      switchUsers, onLogout: this.logout,
+      // section flags
+      showDashboard: sec === 'dashboard', showBoard: sec === 'board', showClients: sec === 'clients',
+      showUsers: sec === 'users' && isAdmin, showConfig: sec === 'config' && isAdmin, showSettings: sec === 'settings',
+      // board
+      filterChips, boardColumns,
+      // clients
+      search: S.search, onSearch: this.setSearch, clientRows, clientCount: clientRows.length, noClients: clientRows.length === 0, tableHeadStyle,
+      // users
+      userRows, userCount: userRows.length,
+      // config
+      configColumns, onAddColumn: this.openColumnModal,
+      configSources, onAddSource: this.addSource,
+      // dashboard
+      metrics, byStage, bySource, byUser, dashGridCols,
+      panelChips, showPanelFilter: canFilter,
+      stageTimeBars, advTime, bottleneckLabel, timingGridCols, showStageTiming,
+      // settings
+      densityOpts, styleOpts, accentOpts, loginEmail,
+      // modals
+      showClientModal: S.showClientModal, clientModal,
+      showDeleteCol: isAdmin || isSup,
+      delBtnHover: { background: '#FEE2E2', color: '#DC2626' },
+      showConfirmDelClient: !!S.confirmDelClientId,
+      confirmDelClient: (() => { const c = S.clients.find(x => x.id === S.confirmDelClientId); return { name: c ? ((c.nombre + ' ' + c.apellidos).trim() || 'este cliente') : '', onCancel: this.cancelDeleteClient, onConfirm: this.confirmDeleteClient }; })(),
+      showColumnModal: S.showColumnModal, columnModal,
+      showUserModal: S.showUserModal, userModal,
+      showClientDetail: !!clientDetail, clientDetail,
+      inputStyle,
+      stop: (e) => e.stopPropagation(),
+      true: true,
+    };
+  }
+}
+</script>
+</body>
+</html>

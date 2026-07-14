@@ -1,0 +1,44 @@
+.config-page {
+  padding: 22px 26px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (max-width: 759px) {
+  .config-page {
+    padding: 16px 14px 24px;
+  }
+}
+
+.config-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+}
+
+.config-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.config-card-title {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.config-card-desc {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin: 0 0 18px;
+}
+
+.config-item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}

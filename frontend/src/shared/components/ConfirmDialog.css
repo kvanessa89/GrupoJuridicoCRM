@@ -1,0 +1,40 @@
+.confirm-dialog {
+  padding: 26px 26px 22px;
+}
+
+.confirm-dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.confirm-dialog-icon {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: var(--color-danger-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-danger);
+}
+
+.confirm-dialog-title {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.confirm-dialog-message {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+  margin: 0 0 22px;
+}
+
+.confirm-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}

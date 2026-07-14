@@ -1,0 +1,58 @@
+/*
+  Design tokens ported from design-reference/Domus CRM.dc.html.
+  The original export has no CSS classes — colors/radii/shadows were literal
+  values inside JS style-builder functions (avatar(), srcBadge(), buildCard()...).
+  These custom properties are that same palette, named so every value here
+  can be traced back to a literal in the reference file.
+*/
+:root {
+  --font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+
+  --color-bg: #f4f6fa;
+  --color-surface: #ffffff;
+
+  --color-text: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+  --color-text-faint: #94a3b8;
+
+  --color-border: #e7ecf3;
+  --color-border-strong: #e2e8f0;
+  --color-border-soft: #eef2f7;
+  --color-border-faint: #f1f4f9;
+
+  /* Brand accent — fixed (the reference's theme picker never actually reads
+     the chosen accent back, effAccent() always returns this value). */
+  --color-accent: #ac740e;
+
+  --color-danger: #dc2626;
+  --color-danger-bg: #fee2e2;
+  --color-danger-bg-soft: #fef2f2;
+  --color-danger-border: #fecaca;
+  --color-success: #16a34a;
+
+  --color-sidebar-bg: #0b1220;
+  --color-sidebar-text-inactive: #d9a95e;
+
+  --radius-sm: 7px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-hover: 0 6px 18px rgba(15, 23, 42, 0.12);
+  --shadow-modal: 0 24px 60px rgba(15, 23, 42, 0.3);
+  --shadow-popover: 0 16px 40px rgba(15, 23, 42, 0.16);
+}
+
+/* Swatch palette offered when picking stage/source/user colors. */
+:root {
+  --palette-1: #2563eb;
+  --palette-2: #0891b2;
+  --palette-3: #7c3aed;
+  --palette-4: #d97706;
+  --palette-5: #ea580c;
+  --palette-6: #16a34a;
+  --palette-7: #e11d48;
+  --palette-8: #0f766e;
+}

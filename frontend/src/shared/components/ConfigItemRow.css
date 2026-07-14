@@ -1,0 +1,83 @@
+.config-item-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 11px 13px;
+  border: 1px solid var(--color-border);
+  border-radius: 11px;
+  background: #fcfdfe;
+}
+
+.config-item-arrows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.config-item-arrow {
+  font-size: 8px;
+  line-height: 1;
+  color: var(--color-text-faint);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.config-item-arrow:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+.config-item-code {
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  border-radius: 6px;
+  padding: 4px 8px;
+  min-width: 36px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.config-item-swatches {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.config-item-swatch {
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.config-item-input {
+  flex: 1;
+  min-width: 120px;
+  font-weight: 600;
+}
+
+.config-item-delete {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  color: var(--color-danger);
+  background: var(--color-danger-bg-soft);
+}
+
+.config-item-delete:disabled {
+  cursor: not-allowed;
+  color: var(--color-border-strong);
+  background: var(--color-border-faint);
+}
