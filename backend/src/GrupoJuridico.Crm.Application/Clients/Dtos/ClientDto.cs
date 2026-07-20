@@ -13,6 +13,7 @@ public class ClientDto
     public Guid OwnerId { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime StageEnteredAt { get; set; }
+    public bool HiddenFromBoard { get; set; }
 }
 
 public class ClientCommentDto

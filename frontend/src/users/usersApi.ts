@@ -37,6 +37,10 @@ function updateUser(id: string, form: UserFormValues) {
   });
 }
 
+function deleteUser(id: string, reassignToUserId: string | null) {
+  return httpClient.delete(`/users/${id}`, { params: { reassignToUserId: reassignToUserId ?? undefined } });
+}
+
 export function useCreateUserMutation() {
   const queryClient = useQueryClient();
   return useMutation({
@@ -50,5 +54,17 @@ export function useUpdateUserMutation() {
   return useMutation({
     mutationFn: ({ id, form }: { id: string; form: UserFormValues }) => updateUser(id, form),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['users'] }),
+  });
+}
+
+export function useDeleteUserMutation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, reassignToUserId }: { id: string; reassignToUserId: string | null }) =>
+      deleteUser(id, reassignToUserId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+      queryClient.invalidateQueries({ queryKey: ['clients'] });
+    },
   });
 }

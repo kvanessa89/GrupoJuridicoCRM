@@ -62,6 +62,25 @@ public class ReorderStageCommandHandler : IRequestHandler<ReorderStageCommand>
     }
 }
 
+// Marca (o desmarca) una etapa como "ocultable": si un cliente llega ahí, supervisor/admin
+// pueden ocultarlo del tablero (ver SetClientBoardVisibilityCommand).
+public record SetStageHideableCommand(int StageId, bool Hideable) : IRequest;
+
+public class SetStageHideableCommandHandler : IRequestHandler<SetStageHideableCommand>
+{
+    private readonly IApplicationDbContext _context;
+    public SetStageHideableCommandHandler(IApplicationDbContext context) => _context = context;
+
+    public async Task Handle(SetStageHideableCommand request, CancellationToken cancellationToken)
+    {
+        var stage = await _context.Stages.FirstOrDefaultAsync(s => s.Id == request.StageId, cancellationToken)
+            ?? throw new KeyNotFoundException($"Etapa {request.StageId} no encontrada.");
+
+        stage.HideableStage = request.Hideable;
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+}
+
 // No permite borrar la última etapa; reasigna los clientes a la etapa más cercana, igual que deleteColumn() original.
 public record DeleteStageCommand(int Id) : IRequest;
 

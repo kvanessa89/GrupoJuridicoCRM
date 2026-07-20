@@ -15,6 +15,8 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<Guid>, 
     public DbSet<Client> Clients => Set<Client>();
     public DbSet<Comment> Comments => Set<Comment>();
     public DbSet<StageHistoryEntry> StageHistoryEntries => Set<StageHistoryEntry>();
+    public DbSet<BoardSnapshot> BoardSnapshots => Set<BoardSnapshot>();
+    public DbSet<BoardSnapshotEntry> BoardSnapshotEntries => Set<BoardSnapshotEntry>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

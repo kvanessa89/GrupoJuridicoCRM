@@ -3,4 +3,5 @@ export interface Stage {
   name: string;
   color: string;
   order: number;
+  canHideFromBoard: boolean;
 }

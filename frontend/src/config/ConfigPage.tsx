@@ -4,6 +4,7 @@ import {
   useCreateStageMutation,
   useDeleteStageMutation,
   useReorderStageMutation,
+  useSetStageHideableMutation,
   useStagesQuery,
   useUpdateStageMutation,
 } from '../stages/stagesApi';
@@ -32,6 +33,7 @@ export function ConfigPage() {
   const updateStage = useUpdateStageMutation();
   const reorderStage = useReorderStageMutation();
   const deleteStage = useDeleteStageMutation();
+  const setStageHideable = useSetStageHideableMutation();
 
   const sourcesQuery = useSourcesQuery();
   const sources = sourcesQuery.data ?? [];
@@ -76,6 +78,41 @@ export function ConfigPage() {
               onDelete={() => deleteStage.mutate(s.id)}
               deleteTitle="Eliminar etapa"
             />
+          ))}
+        </div>
+      </div>
+
+      <div className="config-card">
+        <div className="config-card-header">
+          <div className="config-card-title">Ocultar clientes del tablero</div>
+        </div>
+        <p className="config-card-desc">
+          Cuando un cliente llega a una de estas etapas, el administrador o el supervisor pueden
+          ocultarlo del tablero (sin borrarlo). Marca las etapas que permiten esta acción.
+        </p>
+        <div className="config-hideable-list">
+          {stages.map((s) => (
+            <label key={s.id} className="config-hideable-row">
+              <span className="config-hideable-name">
+                <span className="config-hideable-dot" style={{ background: s.color }} />
+                {s.name}
+              </span>
+              <span
+                className={`config-toggle${s.canHideFromBoard ? ' config-toggle--on' : ''}`}
+                role="switch"
+                aria-checked={s.canHideFromBoard}
+                tabIndex={0}
+                onClick={() => setStageHideable.mutate({ id: s.id, hideable: !s.canHideFromBoard })}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setStageHideable.mutate({ id: s.id, hideable: !s.canHideFromBoard });
+                  }
+                }}
+              >
+                <span className="config-toggle-knob" />
+              </span>
+            </label>
           ))}
         </div>
       </div>

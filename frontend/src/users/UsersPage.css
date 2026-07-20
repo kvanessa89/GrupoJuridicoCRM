@@ -63,6 +63,26 @@
   letter-spacing: 0.04em;
 }
 
+.th-sortable {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  user-select: none;
+}
+
+.th-sortable:hover {
+  color: var(--color-text-secondary);
+}
+
+.th-sortable--active {
+  color: var(--color-accent);
+}
+
+.th-sort-arrow {
+  font-size: 9px;
+}
+
 .users-row {
   display: flex;
   align-items: center;
@@ -103,6 +123,13 @@
   flex: 1.4;
   color: var(--color-text-secondary);
   font-weight: 600;
+}
+
+.col-delete {
+  min-width: 36px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: flex-end;
 }
 
 @media (max-width: 759px) {
@@ -150,4 +177,31 @@
   text-align: center;
   color: var(--color-text-muted);
   font-size: 13.5px;
+}
+
+.users-row-delete-icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: var(--color-text-faint);
+}
+
+.users-row-delete-icon:hover {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.users-delete-warning {
+  color: var(--color-danger);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.users-delete-error {
+  color: var(--color-danger);
+  font-size: 13px;
+  margin-top: 4px;
 }

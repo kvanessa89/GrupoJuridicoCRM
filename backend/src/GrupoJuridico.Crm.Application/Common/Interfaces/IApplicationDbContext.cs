@@ -11,6 +11,8 @@ public interface IApplicationDbContext
     DbSet<Client> Clients { get; }
     DbSet<Comment> Comments { get; }
     DbSet<StageHistoryEntry> StageHistoryEntries { get; }
+    DbSet<BoardSnapshot> BoardSnapshots { get; }
+    DbSet<BoardSnapshotEntry> BoardSnapshotEntries { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

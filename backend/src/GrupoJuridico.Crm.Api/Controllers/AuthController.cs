@@ -10,7 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace GrupoJuridico.Crm.Api.Controllers;
 
 [ApiController]
-[Route("api/auth")]
+[Route("auth")]
 [AllowAnonymous]
 public class AuthController : ControllerBase
 {

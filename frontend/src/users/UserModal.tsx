@@ -7,6 +7,7 @@ import { useCreateUserMutation, useUpdateUserMutation, useUsersQuery } from './u
 import type { UserFormValues } from './types';
 import { apiErrorMessage } from '../shared/utils/apiError';
 import { PALETTE } from '../shared/utils/palette';
+import { isValidEmail } from '../shared/utils/validation';
 import './UserModal.css';
 
 const ROLE_OPTIONS: Role[] = [Roles.Admin, Roles.Supervisor, Roles.Editor, Roles.Asesor];
@@ -63,7 +64,7 @@ export function UserModal({ userId, onClose }: UserModalProps) {
   const canSave =
     !!form &&
     form.name.trim().length > 0 &&
-    (isEdit || (form.email.trim().length > 0 && form.password.length > 0));
+    (isEdit || (isValidEmail(form.email) && form.password.length > 0));
   const isSaving = createMutation.isPending || updateMutation.isPending;
 
   function set<K extends keyof UserFormValues>(field: K, value: UserFormValues[K]) {
@@ -129,6 +130,7 @@ export function UserModal({ userId, onClose }: UserModalProps) {
                   className="form-input"
                   value={form.name}
                   onChange={(e) => set('name', e.target.value)}
+                  maxLength={25}
                 />
               </div>
               <div className="form-field">
@@ -140,6 +142,7 @@ export function UserModal({ userId, onClose }: UserModalProps) {
                   className="form-input"
                   value={form.title}
                   onChange={(e) => set('title', e.target.value)}
+                  maxLength={30}
                 />
               </div>
             </div>
@@ -154,7 +157,11 @@ export function UserModal({ userId, onClose }: UserModalProps) {
                 value={form.email}
                 onChange={(e) => set('email', e.target.value)}
                 readOnly={isEdit}
+                maxLength={50}
               />
+              {!isEdit && form.email.trim().length > 0 && !isValidEmail(form.email) && (
+                <div className="modal-error-text">Ingresa un correo electrónico válido.</div>
+              )}
             </div>
 
             <div className="form-field">
@@ -170,6 +177,7 @@ export function UserModal({ userId, onClose }: UserModalProps) {
                   value={form.password}
                   onChange={(e) => set('password', e.target.value)}
                   placeholder={isEdit ? 'Dejar en blanco para no cambiarla' : undefined}
+                  maxLength={50}
                 />
                 <button
                   type="button"

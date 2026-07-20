@@ -15,6 +15,13 @@ public class GetStagesQueryHandler : IRequestHandler<GetStagesQuery, List<StageD
         await _context.Stages
             .AsNoTracking()
             .OrderBy(s => s.Order)
-            .Select(s => new StageDto { Id = s.Id, Name = s.Name, Color = s.Color, Order = s.Order })
+            .Select(s => new StageDto
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Color = s.Color,
+                Order = s.Order,
+                CanHideFromBoard = s.HideableStage,
+            })
             .ToListAsync(cancellationToken);
 }

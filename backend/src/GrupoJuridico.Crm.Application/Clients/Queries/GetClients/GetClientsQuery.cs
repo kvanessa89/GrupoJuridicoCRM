@@ -37,6 +37,7 @@ public class GetClientsQueryHandler : IRequestHandler<GetClientsQuery, List<Clie
                 OwnerId = c.OwnerId,
                 CreatedAt = c.CreatedAt,
                 StageEnteredAt = c.StageEnteredAt,
+                HiddenFromBoard = c.HiddenFromBoard,
             })
             .ToListAsync(cancellationToken);
     }

@@ -59,6 +59,25 @@ export function useMoveClientMutation() {
   });
 }
 
+export function useSetBoardVisibilityMutation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, hidden }: { id: number; hidden: boolean }) => api.setClientBoardVisibility(id, hidden),
+    onMutate: ({ id, hidden }) => {
+      queryClient.cancelQueries({ queryKey: ['clients'] });
+      const previousClients = queryClient.getQueryData<Client[]>(['clients']);
+      queryClient.setQueryData<Client[]>(['clients'], (old) =>
+        old?.map((c) => (c.id === id ? { ...c, hiddenFromBoard: hidden } : c)),
+      );
+      return { previousClients };
+    },
+    onError: (_err, _vars, context) => {
+      if (context?.previousClients) queryClient.setQueryData(['clients'], context.previousClients);
+    },
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ['clients'] }),
+  });
+}
+
 export function useDeleteClientMutation() {
   const queryClient = useQueryClient();
   return useMutation({

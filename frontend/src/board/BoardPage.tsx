@@ -13,11 +13,12 @@ import { useAuth } from '../auth/AuthContext';
 import { canFilterTeam } from '../auth/roles';
 import { useHeaderAction } from '../layout/HeaderActionContext';
 import { ClientModal } from '../clients/ClientModal';
-import { useClientsQuery, useMoveClientMutation } from '../clients/useClients';
+import { ConfirmDialog } from '../shared/components/ConfirmDialog';
+import { useClientsQuery, useMoveClientMutation, useSetBoardVisibilityMutation } from '../clients/useClients';
 import { useStagesQuery } from '../stages/stagesApi';
 import { useSourcesQuery } from '../sources/sourcesApi';
 import { useUsersQuery } from '../users/usersApi';
-import { advisorsManagedBy } from '../users/teamHelpers';
+import { peopleWithClients } from '../users/teamHelpers';
 import { BoardColumn } from './BoardColumn';
 import { BoardCardContent } from './BoardCardContent';
 import './BoardPage.css';
@@ -29,14 +30,17 @@ export function BoardPage() {
   const sourcesQuery = useSourcesQuery();
   const usersQuery = useUsersQuery();
   const moveMutation = useMoveClientMutation();
+  const visibilityMutation = useSetBoardVisibilityMutation();
 
   const [filterId, setFilterId] = useState<string>('all');
   const [modalTarget, setModalTarget] = useState<number | null | 'new'>(null);
   const [newClientStageId, setNewClientStageId] = useState<number | undefined>(undefined);
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
+  const [hideTarget, setHideTarget] = useState<number | null>(null);
   const columnRefs = useRef(new Map<number, HTMLDivElement | null>());
 
   const canFilter = !!user && canFilterTeam(user.role);
+  const canHide = canFilter;
   const clients = clientsQuery.data ?? [];
   const stages = stagesQuery.data ?? [];
   const sources = sourcesQuery.data ?? [];
@@ -63,15 +67,16 @@ export function BoardPage() {
   );
   useHeaderAction(headerAction);
 
-  const managedAdvisors = useMemo(() => (user ? advisorsManagedBy(users, user) : []), [users, user]);
+  const managedAdvisors = useMemo(() => (user ? peopleWithClients(users, user, clients) : []), [users, user, clients]);
 
   const sourcesById = useMemo(() => new Map(sources.map((s) => [s.id, s])), [sources]);
   const usersById = useMemo(() => new Map(users.map((u) => [u.id, u])), [users]);
   const stagesById = useMemo(() => new Map(stages.map((s) => [s.id, s])), [stages]);
 
   const boardScope = useMemo(() => {
-    if (canFilter && filterId !== 'all') return clients.filter((c) => c.ownerId === filterId);
-    return clients;
+    const visible = clients.filter((c) => !c.hiddenFromBoard);
+    if (canFilter && filterId !== 'all') return visible.filter((c) => c.ownerId === filterId);
+    return visible;
   }, [clients, canFilter, filterId]);
 
   const showOwnerOnCard = canFilter && filterId === 'all';
@@ -135,7 +140,7 @@ export function BoardPage() {
               className={`board-filter-chip${filterId === a.id ? ' board-filter-chip--active' : ''}`}
               onClick={() => setFilterId(a.id)}
             >
-              {a.name.split(' ')[0]}
+              {a.name}
             </button>
           ))}
         </div>
@@ -153,11 +158,13 @@ export function BoardPage() {
                 usersById={usersById}
                 showOwner={showOwnerOnCard}
                 canAdd={canFilter}
+                canHide={canHide}
                 onAddClient={() => {
                   setNewClientStageId(stage.id);
                   setModalTarget('new');
                 }}
                 onCardClick={(id) => setModalTarget(id)}
+                onHideClient={(id) => setHideTarget(id)}
                 registerRef={(node) => columnRefs.current.set(stage.id, node)}
               />
             ))}
@@ -180,6 +187,40 @@ export function BoardPage() {
           </DragOverlay>
         </DndContext>
       </div>
+
+      {hideTarget !== null && (
+        <ConfirmDialog
+          title="Ocultar del tablero"
+          icon={
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z" />
+              <line x1="4" y1="4" x2="20" y2="20" />
+            </svg>
+          }
+          message={
+            <>
+              ¿Ocultar a{' '}
+              <strong>
+                {(() => {
+                  const c = clients.find((cl) => cl.id === hideTarget);
+                  return c ? `${c.nombre} ${c.apellidos}`.trim() : 'este cliente';
+                })()}
+              </strong>{' '}
+              del tablero? Seguirá existiendo y podrás restaurarlo desde la lista de clientes.
+            </>
+          }
+          confirmLabel="Ocultar"
+          confirmingLabel="Ocultando…"
+          isConfirming={visibilityMutation.isPending}
+          onCancel={() => setHideTarget(null)}
+          onConfirm={() =>
+            visibilityMutation.mutate(
+              { id: hideTarget, hidden: true },
+              { onSuccess: () => setHideTarget(null) },
+            )
+          }
+        />
+      )}
 
       {modalTarget !== null && (
         <ClientModal

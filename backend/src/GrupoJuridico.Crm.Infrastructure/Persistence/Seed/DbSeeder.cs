@@ -19,17 +19,8 @@ public static class DbSeeder
 
         if (await context.Users.AnyAsync()) return;
 
-        var supervisor = new User { UserName = "roberto.vidal@grupojuridico.com", Email = "roberto.vidal@grupojuridico.com", EmailConfirmed = true, Name = "Roberto Vidal", Title = "Supervisor de equipo", Color = "#DB2777" };
-        await CreateSeedUserAsync(userManager, supervisor, "Supervisor123!", Roles.Supervisor);
-
-        var admin = new User { UserName = "laura.mendez@grupojuridico.com", Email = "laura.mendez@grupojuridico.com", EmailConfirmed = true, Name = "Laura Méndez", Title = "Gerente comercial", Color = "#2563EB" };
+        var admin = new User { UserName = "info@grupo-juridico.com", Email = "info@grupo-juridico.com", EmailConfirmed = true, Name = "Administrador", Title = "Administrador", Color = "#2563EB" };
         await CreateSeedUserAsync(userManager, admin, "Admin123!", Roles.Admin);
-
-        var editor = new User { UserName = "paula.soto@grupojuridico.com", Email = "paula.soto@grupojuridico.com", EmailConfirmed = true, Name = "Paula Soto", Title = "Registro de clientes", Color = "#D97706" };
-        await CreateSeedUserAsync(userManager, editor, "Editor123!", Roles.Editor);
-
-        var asesor = new User { UserName = "carlos.ruiz@grupojuridico.com", Email = "carlos.ruiz@grupojuridico.com", EmailConfirmed = true, Name = "Carlos Ruiz", Title = "Asesor inmobiliario", Color = "#0891B2", SupervisorId = supervisor.Id };
-        await CreateSeedUserAsync(userManager, asesor, "Asesor123!", Roles.Asesor);
 
         var stages = new[]
         {
@@ -38,7 +29,8 @@ public static class DbSeeder
             new Stage { Name = "Visita agendada", Color = "#D97706", Order = 2 },
             new Stage { Name = "Propuesta",       Color = "#7C3AED", Order = 3 },
             new Stage { Name = "Negociación",     Color = "#EA580C", Order = 4 },
-            new Stage { Name = "Cerrado ganado",  Color = "#16A34A", Order = 5 },
+            new Stage { Name = "Cerrado ganado",  Color = "#16A34A", Order = 5, HideableStage = true },
+            new Stage { Name = "Descartados",     Color = "#E11D48", Order = 6, HideableStage = true },
         };
         context.Stages.AddRange(stages);
 

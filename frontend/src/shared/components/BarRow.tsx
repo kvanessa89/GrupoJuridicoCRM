@@ -6,9 +6,10 @@ interface BarRowProps {
   percent: number;
   color: string;
   dotColor?: string;
+  isEmpty?: boolean;
 }
 
-export function BarRow({ name, valueLabel, percent, color, dotColor }: BarRowProps) {
+export function BarRow({ name, valueLabel, percent, color, dotColor, isEmpty }: BarRowProps) {
   return (
     <div className="bar-row">
       <div className="bar-row-head">
@@ -16,9 +17,9 @@ export function BarRow({ name, valueLabel, percent, color, dotColor }: BarRowPro
           {dotColor && <span className="bar-row-dot" style={{ background: dotColor }} />}
           {name}
         </span>
-        <span className="bar-row-value">{valueLabel}</span>
+        <span className={`bar-row-value${isEmpty ? ' bar-row-value--empty' : ''}`}>{valueLabel}</span>
       </div>
-      <div className="bar-row-track">
+      <div className={`bar-row-track${isEmpty ? ' bar-row-track--empty' : ''}`}>
         <div className="bar-row-fill" style={{ width: `${percent}%`, background: color }} />
       </div>
     </div>

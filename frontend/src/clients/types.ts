@@ -10,6 +10,7 @@ export interface Client {
   ownerId: string;
   createdAt: string;
   stageEnteredAt: string;
+  hiddenFromBoard: boolean;
 }
 
 export interface StageHistoryEntry {

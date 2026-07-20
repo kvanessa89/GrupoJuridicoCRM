@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Modal } from '../shared/components/Modal';
 import { Avatar } from '../shared/components/Avatar';
 import { useAuth } from '../auth/AuthContext';
-import { canFilterTeam, isEditor } from '../auth/roles';
+import { canFilterTeam, isAdmin, isEditor } from '../auth/roles';
 import { useStagesQuery } from '../stages/stagesApi';
 import { useSourcesQuery } from '../sources/sourcesApi';
 import { useUsersQuery } from '../users/usersApi';
@@ -18,6 +18,7 @@ import {
 } from './useClients';
 import type { ClientFormValues } from './types';
 import { apiErrorMessage } from '../shared/utils/apiError';
+import { isValidEmail } from '../shared/utils/validation';
 import './ClientModal.css';
 
 interface ClientModalProps {
@@ -69,7 +70,7 @@ export function ClientModal({ clientId, onClose, initialStageId }: ClientModalPr
     }
 
     let ownerId = user.id;
-    if (isEditor(user.role)) {
+    if (isEditor(user.role) || isAdmin(user.role)) {
       ownerId = supervisorUsers(users)[0]?.id ?? user.id;
     } else if (canFilterTeam(user.role)) {
       ownerId = advisorsManagedBy(users, user)[0]?.id ?? user.id;
@@ -91,12 +92,18 @@ export function ClientModal({ clientId, onClose, initialStageId }: ClientModalPr
   const isEdit = !!clientId;
   const canEditBasics = canFilterTeam(user.role) || isEditor(user.role);
   const showOwner = canEditBasics;
-  const ownerOptions = isEditor(user.role) ? supervisorUsers(users) : advisorsManagedBy(users, user);
-  const ownerLabel = isEditor(user.role) ? 'Supervisora asignada' : 'Asesor asignado';
+  const assignsToSupervisor = isEditor(user.role) || (isAdmin(user.role) && !isEdit);
+  const baseOwnerOptions = assignsToSupervisor ? supervisorUsers(users) : advisorsManagedBy(users, user);
+  const currentOwner = existing ? users.find((u) => u.id === existing.ownerId) : undefined;
+  const ownerOptions =
+    currentOwner && !baseOwnerOptions.some((o) => o.id === currentOwner.id)
+      ? [currentOwner, ...baseOwnerOptions]
+      : baseOwnerOptions;
+  const ownerLabel = 'Asignado a';
   const canSave =
     !!form &&
     form.nombre.trim().length > 0 &&
-    form.email.trim().length > 0 &&
+    isValidEmail(form.email) &&
     form.whatsapp.trim().length > 0;
   const isSaving = createMutation.isPending || updateMutation.isPending || moveMutation.isPending;
 
@@ -160,6 +167,7 @@ export function ClientModal({ clientId, onClose, initialStageId }: ClientModalPr
                     value={form.nombre}
                     onChange={(e) => set('nombre', e.target.value)}
                     readOnly={!canEditBasics}
+                    maxLength={25}
                   />
                 </div>
                 <div className="form-field">
@@ -172,6 +180,7 @@ export function ClientModal({ clientId, onClose, initialStageId }: ClientModalPr
                     value={form.apellidos}
                     onChange={(e) => set('apellidos', e.target.value)}
                     readOnly={!canEditBasics}
+                    maxLength={25}
                   />
                 </div>
               </div>
@@ -186,7 +195,11 @@ export function ClientModal({ clientId, onClose, initialStageId }: ClientModalPr
                   value={form.email}
                   onChange={(e) => set('email', e.target.value)}
                   readOnly={!canEditBasics}
+                  maxLength={50}
                 />
+                {form.email.trim().length > 0 && !isValidEmail(form.email) && (
+                  <div className="modal-error-text">Ingresa un correo electrónico válido.</div>
+                )}
               </div>
 
               <div className="form-row">
@@ -200,6 +213,7 @@ export function ClientModal({ clientId, onClose, initialStageId }: ClientModalPr
                     value={form.telefono}
                     onChange={(e) => set('telefono', e.target.value)}
                     readOnly={!canEditBasics}
+                    maxLength={20}
                   />
                 </div>
                 <div className="form-field">
@@ -212,6 +226,7 @@ export function ClientModal({ clientId, onClose, initialStageId }: ClientModalPr
                     value={form.whatsapp}
                     onChange={(e) => set('whatsapp', e.target.value)}
                     readOnly={!canEditBasics}
+                    maxLength={20}
                   />
                 </div>
               </div>

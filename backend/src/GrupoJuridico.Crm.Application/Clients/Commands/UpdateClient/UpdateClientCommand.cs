@@ -1,3 +1,4 @@
+using GrupoJuridico.Crm.Application.Common;
 using GrupoJuridico.Crm.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,9 @@ public class UpdateClientCommandHandler : IRequestHandler<UpdateClientCommand>
 
     public async Task Handle(UpdateClientCommand request, CancellationToken cancellationToken)
     {
+        if (!EmailValidator.IsValid(request.Email))
+            throw new InvalidOperationException("El correo electrónico no es válido.");
+
         var entity = await _context.Clients.FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken)
             ?? throw new KeyNotFoundException($"Cliente {request.Id} no encontrado.");
 

@@ -9,9 +9,11 @@ import { fmtDateShort } from '../shared/utils/format';
 import { useStagesQuery } from '../stages/stagesApi';
 import { useSourcesQuery } from '../sources/sourcesApi';
 import { useUsersQuery } from '../users/usersApi';
-import { useClientsQuery, useDeleteClientMutation } from './useClients';
+import { useClientsQuery, useDeleteClientMutation, useSetBoardVisibilityMutation } from './useClients';
 import { ClientModal } from './ClientModal';
 import './ClientsPage.css';
+
+type SortKey = 'cliente' | 'origen' | 'etapa' | 'asesor';
 
 export function ClientsPage() {
   const { user } = useAuth();
@@ -20,13 +22,26 @@ export function ClientsPage() {
   const sourcesQuery = useSourcesQuery();
   const usersQuery = useUsersQuery();
   const deleteMutation = useDeleteClientMutation();
+  const visibilityMutation = useSetBoardVisibilityMutation();
 
   const [search, setSearch] = useState('');
   const [modalTarget, setModalTarget] = useState<number | null | 'new'>(null);
   const [deleteTarget, setDeleteTarget] = useState<number | null>(null);
+  const [sortKey, setSortKey] = useState<SortKey | null>(null);
+  const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc');
+
+  function toggleSort(key: SortKey) {
+    if (sortKey === key) {
+      setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortKey(key);
+      setSortDir('asc');
+    }
+  }
 
   const canCreate = !!user && (canFilterTeam(user.role) || isEditor(user.role));
   const canDelete = !!user && canFilterTeam(user.role);
+  const canManageVisibility = canDelete;
   const showAsesorCol = !!user && isAdmin(user.role);
 
   const headerAction = useMemo(
@@ -59,14 +74,32 @@ export function ClientsPage() {
 
   const rows = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return (clientsQuery.data ?? []).filter((c) => {
+    const filtered = (clientsQuery.data ?? []).filter((c) => {
       if (!q) return true;
       return (
         `${c.nombre} ${c.apellidos}`.toLowerCase().includes(q) ||
         (c.email ?? '').toLowerCase().includes(q)
       );
     });
-  }, [clientsQuery.data, search]);
+
+    if (!sortKey) return filtered;
+
+    const dir = sortDir === 'asc' ? 1 : -1;
+    return [...filtered].sort((a, b) => {
+      switch (sortKey) {
+        case 'cliente':
+          return `${a.nombre} ${a.apellidos}`.trim().localeCompare(`${b.nombre} ${b.apellidos}`.trim()) * dir;
+        case 'origen':
+          return (sourcesById.get(a.sourceId)?.label ?? '').localeCompare(sourcesById.get(b.sourceId)?.label ?? '') * dir;
+        case 'etapa':
+          return ((stagesById.get(a.stageId)?.order ?? 0) - (stagesById.get(b.stageId)?.order ?? 0)) * dir;
+        case 'asesor':
+          return (usersById.get(a.ownerId)?.name ?? '').localeCompare(usersById.get(b.ownerId)?.name ?? '') * dir;
+        default:
+          return 0;
+      }
+    });
+  }, [clientsQuery.data, search, sortKey, sortDir, sourcesById, stagesById, usersById]);
 
   const deleteTargetClient = deleteTarget ? clientsQuery.data?.find((c) => c.id === deleteTarget) : undefined;
 
@@ -89,11 +122,25 @@ export function ClientsPage() {
 
       <div className="clients-table">
         <div className="clients-table-head">
-          <div className="col-cliente">Cliente</div>
+          <div className={`col-cliente th-sortable${sortKey === 'cliente' ? ' th-sortable--active' : ''}`} onClick={() => toggleSort('cliente')}>
+            Cliente
+            {sortKey === 'cliente' && <span className="th-sort-arrow">{sortDir === 'asc' ? '▲' : '▼'}</span>}
+          </div>
           <div className="col-contacto">Contacto</div>
-          <div className="col-origen">Origen</div>
-          <div className="col-etapa">Etapa</div>
-          {showAsesorCol && <div className="col-asesor">Asesor</div>}
+          <div className={`col-origen th-sortable${sortKey === 'origen' ? ' th-sortable--active' : ''}`} onClick={() => toggleSort('origen')}>
+            Origen
+            {sortKey === 'origen' && <span className="th-sort-arrow">{sortDir === 'asc' ? '▲' : '▼'}</span>}
+          </div>
+          <div className={`col-etapa th-sortable${sortKey === 'etapa' ? ' th-sortable--active' : ''}`} onClick={() => toggleSort('etapa')}>
+            Etapa
+            {sortKey === 'etapa' && <span className="th-sort-arrow">{sortDir === 'asc' ? '▲' : '▼'}</span>}
+          </div>
+          {showAsesorCol && (
+            <div className={`col-asesor th-sortable${sortKey === 'asesor' ? ' th-sortable--active' : ''}`} onClick={() => toggleSort('asesor')}>
+              Asesor
+              {sortKey === 'asesor' && <span className="th-sort-arrow">{sortDir === 'asc' ? '▲' : '▼'}</span>}
+            </div>
+          )}
           {canDelete && <div className="col-delete" />}
         </div>
 
@@ -131,6 +178,7 @@ export function ClientsPage() {
               </div>
               <div className="col-etapa">
                 {stage ? <Badge label={stage.name} color={stage.color} size="md" /> : '—'}
+                {c.hiddenFromBoard && <span className="clients-hidden-badge">Oculto del tablero</span>}
               </div>
               {showAsesorCol && (
                 <div className="col-asesor clients-row-owner">
@@ -138,22 +186,44 @@ export function ClientsPage() {
                   <span>{owner?.name ?? '—'}</span>
                 </div>
               )}
-              {canDelete && (
-                <div
-                  className="col-delete clients-row-delete-icon"
-                  title="Eliminar cliente"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setDeleteTarget(c.id);
-                  }}
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M4 7h16" />
-                    <path d="M10 11v6" />
-                    <path d="M14 11v6" />
-                    <path d="M5 7l1 13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-13" />
-                    <path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
-                  </svg>
+              {(canDelete || canManageVisibility) && (
+                <div className="col-delete clients-row-actions">
+                  {canManageVisibility && (
+                    // Reserva el espacio del ícono siempre (aunque no esté oculto) para que
+                    // col-delete tenga el mismo ancho en todas las filas y no desalinee las demás columnas.
+                    <div
+                      className={`clients-row-restore-icon${c.hiddenFromBoard ? '' : ' clients-row-restore-icon--placeholder'}`}
+                      title={c.hiddenFromBoard ? 'Restaurar al tablero' : undefined}
+                      onClick={(e) => {
+                        if (!c.hiddenFromBoard) return;
+                        e.stopPropagation();
+                        visibilityMutation.mutate({ id: c.id, hidden: false });
+                      }}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z" />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                    </div>
+                  )}
+                  {canDelete && (
+                    <div
+                      className="clients-row-delete-icon"
+                      title="Eliminar cliente"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setDeleteTarget(c.id);
+                      }}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M4 7h16" />
+                        <path d="M10 11v6" />
+                        <path d="M14 11v6" />
+                        <path d="M5 7l1 13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-13" />
+                        <path d="M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3" />
+                      </svg>
+                    </div>
+                  )}
                 </div>
               )}
             </div>

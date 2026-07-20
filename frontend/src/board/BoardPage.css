@@ -153,6 +153,38 @@
   color: var(--color-text);
 }
 
+.board-card-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.board-card-hide-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  padding: 0;
+  border-radius: 6px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s, background 0.12s, color 0.12s;
+}
+
+.board-card:hover .board-card-hide-btn {
+  opacity: 1;
+}
+
+.board-card-hide-btn:hover {
+  background: var(--color-border-faint);
+  color: var(--color-text);
+}
+
 .board-card-source {
   margin-top: 8px;
 }

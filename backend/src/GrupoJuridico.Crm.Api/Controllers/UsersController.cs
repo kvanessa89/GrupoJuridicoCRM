@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GrupoJuridico.Crm.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 [Authorize]
 public class UsersController : ControllerBase
 {
@@ -27,6 +27,14 @@ public class UsersController : ControllerBase
     {
         if (id != command.Id) return BadRequest();
         await _mediator.Send(command);
+        return NoContent();
+    }
+
+    [HttpDelete("{id:guid}")]
+    [Authorize(Roles = Roles.Admin)]
+    public async Task<IActionResult> Delete(Guid id, [FromQuery] Guid? reassignToUserId)
+    {
+        await _mediator.Send(new DeleteUserCommand { Id = id, ReassignToUserId = reassignToUserId });
         return NoContent();
     }
 }

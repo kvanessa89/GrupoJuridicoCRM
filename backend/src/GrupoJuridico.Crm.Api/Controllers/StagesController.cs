@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GrupoJuridico.Crm.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 [Authorize]
 public class StagesController : ControllerBase
 {
@@ -36,6 +36,14 @@ public class StagesController : ControllerBase
         return NoContent();
     }
 
+    [HttpPost("{id:int}/hideable")]
+    [Authorize(Roles = Roles.Admin)]
+    public async Task<IActionResult> SetHideable(int id, [FromBody] SetStageHideableRequest request)
+    {
+        await _mediator.Send(new SetStageHideableCommand(id, request.Hideable));
+        return NoContent();
+    }
+
     [HttpDelete("{id:int}")]
     [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> Delete(int id)
@@ -44,3 +52,5 @@ public class StagesController : ControllerBase
         return NoContent();
     }
 }
+
+public record SetStageHideableRequest(bool Hideable);

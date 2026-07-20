@@ -10,10 +10,12 @@ interface BoardCardProps {
   owner?: User;
   showOwner: boolean;
   stageColor: string;
+  showHideButton?: boolean;
   onClick: () => void;
+  onHide?: () => void;
 }
 
-export function BoardCard({ client, source, owner, showOwner, stageColor, onClick }: BoardCardProps) {
+export function BoardCard({ client, source, owner, showOwner, stageColor, showHideButton, onClick, onHide }: BoardCardProps) {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: client.id,
   });
@@ -27,7 +29,14 @@ export function BoardCard({ client, source, owner, showOwner, stageColor, onClic
       {...listeners}
       {...attributes}
     >
-      <BoardCardContent client={client} source={source} owner={owner} showOwner={showOwner} />
+      <BoardCardContent
+        client={client}
+        source={source}
+        owner={owner}
+        showOwner={showOwner}
+        showHideButton={showHideButton}
+        onHide={onHide}
+      />
     </div>
   );
 }

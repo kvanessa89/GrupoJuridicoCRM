@@ -31,11 +31,21 @@
   flex-shrink: 0;
 }
 
+.bar-row-value--empty {
+  color: var(--color-text-faint);
+  font-weight: 600;
+}
+
 .bar-row-track {
   height: 9px;
   background: var(--color-border-soft);
   border-radius: 6px;
   overflow: hidden;
+}
+
+.bar-row-track--empty {
+  background: var(--color-border-faint);
+  opacity: 0.6;
 }
 
 .bar-row-fill {

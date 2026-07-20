@@ -63,9 +63,29 @@
   letter-spacing: 0.04em;
 }
 
-.clients-row {
+.th-sortable {
+  cursor: pointer;
   display: flex;
   align-items: center;
+  gap: 4px;
+  user-select: none;
+}
+
+.th-sortable:hover {
+  color: var(--color-text-secondary);
+}
+
+.th-sortable--active {
+  color: var(--color-accent);
+}
+
+.th-sort-arrow {
+  font-size: 9px;
+}
+
+.clients-row {
+  display: flex;
+  align-items: flex-start;
   padding: 13px 18px;
   border-top: 1px solid var(--color-border-faint);
   font-size: 13.5px;
@@ -90,23 +110,28 @@
 .col-origen {
   flex: 1.2;
   min-width: 0;
+  padding-top: 2px;
 }
 
 .col-etapa {
   flex: 1.4;
   min-width: 0;
+  padding-top: 2px;
 }
 
 .col-asesor {
   flex: 1.2;
   min-width: 0;
+  padding-top: 2px;
 }
 
 .col-delete {
-  width: 36px;
+  min-width: 36px;
   flex-shrink: 0;
   display: flex;
   justify-content: flex-end;
+  gap: 4px;
+  align-self: center;
 }
 
 @media (max-width: 759px) {
@@ -190,6 +215,34 @@
 .clients-row-delete-icon:hover {
   background: var(--color-danger-bg);
   color: var(--color-danger);
+}
+
+.clients-row-restore-icon {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  color: var(--color-text-faint);
+}
+
+.clients-row-restore-icon--placeholder {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.clients-row-restore-icon:hover {
+  background: var(--color-border-faint);
+  color: var(--color-accent);
+}
+
+.clients-hidden-badge {
+  display: block;
+  margin-top: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--color-text-faint);
 }
 
 .clients-empty {

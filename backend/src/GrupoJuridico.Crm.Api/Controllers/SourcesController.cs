@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GrupoJuridico.Crm.Api.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 [Authorize]
 public class SourcesController : ControllerBase
 {

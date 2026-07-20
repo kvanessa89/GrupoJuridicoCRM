@@ -22,6 +22,61 @@ namespace GrupoJuridico.Crm.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("GrupoJuridico.Crm.Domain.Entities.BoardSnapshot", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("GeneratedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("GeneratedByUserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GeneratedByUserId");
+
+                    b.ToTable("BoardSnapshots");
+                });
+
+            modelBuilder.Entity("GrupoJuridico.Crm.Domain.Entities.BoardSnapshotEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BoardSnapshotId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("StageColor")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
+
+                    b.Property<int>("StageId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("StageName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BoardSnapshotId");
+
+                    b.ToTable("BoardSnapshotEntries");
+                });
+
             modelBuilder.Entity("GrupoJuridico.Crm.Domain.Entities.Client", b =>
                 {
                     b.Property<int>("Id")
@@ -41,6 +96,9 @@ namespace GrupoJuridico.Crm.Infrastructure.Migrations
                     b.Property<string>("Email")
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
+
+                    b.Property<bool>("HiddenFromBoard")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -157,6 +215,9 @@ namespace GrupoJuridico.Crm.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(9)
                         .HasColumnType("character varying(9)");
+
+                    b.Property<bool>("HideableStage")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -419,6 +480,28 @@ namespace GrupoJuridico.Crm.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("GrupoJuridico.Crm.Domain.Entities.BoardSnapshot", b =>
+                {
+                    b.HasOne("GrupoJuridico.Crm.Domain.Entities.User", "GeneratedByUser")
+                        .WithMany()
+                        .HasForeignKey("GeneratedByUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("GeneratedByUser");
+                });
+
+            modelBuilder.Entity("GrupoJuridico.Crm.Domain.Entities.BoardSnapshotEntry", b =>
+                {
+                    b.HasOne("GrupoJuridico.Crm.Domain.Entities.BoardSnapshot", "BoardSnapshot")
+                        .WithMany("Entries")
+                        .HasForeignKey("BoardSnapshotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BoardSnapshot");
+                });
+
             modelBuilder.Entity("GrupoJuridico.Crm.Domain.Entities.Client", b =>
                 {
                     b.HasOne("GrupoJuridico.Crm.Domain.Entities.User", "Owner")
@@ -551,6 +634,11 @@ namespace GrupoJuridico.Crm.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GrupoJuridico.Crm.Domain.Entities.BoardSnapshot", b =>
+                {
+                    b.Navigation("Entries");
                 });
 
             modelBuilder.Entity("GrupoJuridico.Crm.Domain.Entities.Client", b =>

@@ -6,4 +6,5 @@ public class StageDto
     public string Name { get; set; } = string.Empty;
     public string Color { get; set; } = string.Empty;
     public int Order { get; set; }
+    public bool CanHideFromBoard { get; set; }
 }

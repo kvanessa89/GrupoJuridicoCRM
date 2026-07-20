@@ -12,8 +12,10 @@ interface BoardColumnProps {
   usersById: Map<string, User>;
   showOwner: boolean;
   canAdd: boolean;
+  canHide: boolean;
   onAddClient: () => void;
   onCardClick: (id: number) => void;
+  onHideClient: (id: number) => void;
   registerRef?: (node: HTMLDivElement | null) => void;
 }
 
@@ -24,8 +26,10 @@ export function BoardColumn({
   usersById,
   showOwner,
   canAdd,
+  canHide,
   onAddClient,
   onCardClick,
+  onHideClient,
   registerRef,
 }: BoardColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id: stage.id });
@@ -52,7 +56,9 @@ export function BoardColumn({
             owner={usersById.get(c.ownerId)}
             showOwner={showOwner}
             stageColor={stage.color}
+            showHideButton={canHide && stage.canHideFromBoard}
             onClick={() => onCardClick(c.id)}
+            onHide={() => onHideClient(c.id)}
           />
         ))}
         {cards.length === 0 && <div className="board-column-empty">Arrastra clientes aquí</div>}

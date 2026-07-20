@@ -20,6 +20,10 @@ public class Client : BaseAuditableEntity
     public Guid OwnerId { get; set; }
     public User Owner { get; set; } = null!;
 
+    // Ocultar del tablero (no borra el cliente): lo pone un supervisor/admin cuando
+    // el cliente llega a una etapa listada en HideableStages, ej. "Cerrado ganado".
+    public bool HiddenFromBoard { get; set; }
+
     public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     public ICollection<StageHistoryEntry> StageHistory { get; set; } = new List<StageHistoryEntry>();
 }

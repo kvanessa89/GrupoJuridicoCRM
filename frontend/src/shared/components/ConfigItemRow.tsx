@@ -83,6 +83,7 @@ export function ConfigItemRow({
         onChange={(e) => setDraft(e.target.value)}
         onBlur={commit}
         onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
+        maxLength={90}
       />
 
       <button

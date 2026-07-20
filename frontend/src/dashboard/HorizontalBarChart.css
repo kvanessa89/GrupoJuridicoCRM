@@ -1,0 +1,87 @@
+.hbar-empty {
+  padding: 20px;
+  text-align: center;
+  color: var(--color-text-faint);
+  font-size: 13px;
+}
+
+.hbar-chart {
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  align-items: center;
+  row-gap: 12px;
+  column-gap: 10px;
+}
+
+.hbar-axis-row {
+  display: contents;
+}
+
+.hbar-axis-spacer,
+.hbar-axis-value-spacer {
+  height: 14px;
+}
+
+.hbar-axis-track {
+  position: relative;
+  height: 14px;
+}
+
+.hbar-axis-tick {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--color-text-faint);
+  white-space: nowrap;
+}
+
+.hbar-row {
+  display: contents;
+}
+
+.hbar-row-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hbar-row-track {
+  position: relative;
+  height: 18px;
+  overflow: hidden;
+  background: var(--color-border-faint);
+}
+
+.hbar-row-gridline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-border-soft);
+}
+
+.hbar-row-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  transition: width 0.3s, opacity 0.12s;
+}
+
+.hbar-row-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text);
+  min-width: 46px;
+}
+
+.hbar-row:hover .hbar-row-label,
+.hbar-row--hover .hbar-row-label {
+  color: var(--color-text);
+}

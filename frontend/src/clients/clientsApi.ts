@@ -46,6 +46,10 @@ export function moveClient(id: number, newStageId: number) {
   return httpClient.post(`/clients/${id}/move`, { newStageId });
 }
 
+export function setClientBoardVisibility(id: number, hidden: boolean) {
+  return httpClient.post(`/clients/${id}/board-visibility`, { hidden });
+}
+
 export function deleteClient(id: number) {
   return httpClient.delete(`/clients/${id}`);
 }

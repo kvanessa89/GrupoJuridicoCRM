@@ -1,3 +1,4 @@
+using GrupoJuridico.Crm.Application.Common;
 using GrupoJuridico.Crm.Application.Common.Interfaces;
 using GrupoJuridico.Crm.Domain.Entities;
 using MediatR;
@@ -24,6 +25,9 @@ public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, i
 
     public async Task<int> Handle(CreateClientCommand request, CancellationToken cancellationToken)
     {
+        if (!EmailValidator.IsValid(request.Email))
+            throw new InvalidOperationException("El correo electrónico no es válido.");
+
         var entity = new Client
         {
             Nombre = request.Nombre,

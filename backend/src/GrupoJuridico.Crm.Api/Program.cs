@@ -14,7 +14,10 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
+}
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -48,7 +51,11 @@ builder.Services.AddCors(options =>
 {
     // Ajusta el origen al puerto real de tu frontend (Vite = 5173, CRA = 3000).
     options.AddPolicy("Frontend", policy =>
-        policy.WithOrigins("http://localhost:5173", "http://localhost:3000")
+        policy.WithOrigins(
+                  "http://localhost:5173",
+                  "http://localhost:3000",
+                  "https://kiubco-001-site2.ltempurl.com",
+                  "http://kiubco-001-site2.ltempurl.com")
               .AllowAnyHeader()
               .AllowAnyMethod());
 });
@@ -76,12 +83,17 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
 
+if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
+{
     using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
     await db.Database.MigrateAsync();
+    // DbSeeder.SeedAsync corta apenas encuentra usuarios existentes (context.Users.AnyAsync()),
+    // así que en Staging no pisa datos reales una vez que el sitio ya tiene carga.
     await DbSeeder.SeedAsync(db, roleManager, userManager);
 }
 

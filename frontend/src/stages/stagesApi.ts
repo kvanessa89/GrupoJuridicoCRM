@@ -32,6 +32,10 @@ function deleteStage(id: number) {
   return httpClient.delete(`/stages/${id}`);
 }
 
+function setStageHideable(id: number, hideable: boolean) {
+  return httpClient.post(`/stages/${id}/hideable`, { hideable });
+}
+
 export function useCreateStageMutation() {
   const queryClient = useQueryClient();
   return useMutation({
@@ -65,5 +69,13 @@ export function useDeleteStageMutation() {
       queryClient.invalidateQueries({ queryKey: ['stages'] });
       queryClient.invalidateQueries({ queryKey: ['clients'] });
     },
+  });
+}
+
+export function useSetStageHideableMutation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, hideable }: { id: number; hideable: boolean }) => setStageHideable(id, hideable),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['stages'] }),
   });
 }
