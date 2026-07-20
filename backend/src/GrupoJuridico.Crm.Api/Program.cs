@@ -70,6 +70,7 @@ app.UseExceptionHandler(errorApp =>
         var (status, message) = exception switch
         {
             KeyNotFoundException e => (StatusCodes.Status404NotFound, e.Message),
+            UnauthorizedAccessException e => (StatusCodes.Status403Forbidden, e.Message),
             InvalidOperationException e => (StatusCodes.Status400BadRequest, e.Message),
             _ => (StatusCodes.Status500InternalServerError, "Ocurrió un error inesperado. Intenta de nuevo."),
         };

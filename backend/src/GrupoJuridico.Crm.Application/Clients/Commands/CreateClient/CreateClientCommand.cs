@@ -20,13 +20,21 @@ public record CreateClientCommand : IRequest<int>
 public class CreateClientCommandHandler : IRequestHandler<CreateClientCommand, int>
 {
     private readonly IApplicationDbContext _context;
+    private readonly ICurrentUserService _currentUser;
 
-    public CreateClientCommandHandler(IApplicationDbContext context) => _context = context;
+    public CreateClientCommandHandler(IApplicationDbContext context, ICurrentUserService currentUser)
+    {
+        _context = context;
+        _currentUser = currentUser;
+    }
 
     public async Task<int> Handle(CreateClientCommand request, CancellationToken cancellationToken)
     {
         if (!EmailValidator.IsValid(request.Email))
             throw new InvalidOperationException("El correo electrónico no es válido.");
+
+        if (!await ClientScope.CanAccessAsync(request.OwnerId, _currentUser, _context, cancellationToken))
+            throw new UnauthorizedAccessException("No puedes asignar el cliente a ese usuario.");
 
         var entity = new Client
         {

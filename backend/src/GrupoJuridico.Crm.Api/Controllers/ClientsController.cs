@@ -37,6 +37,7 @@ public class ClientsController : ControllerBase
         => Ok(await _mediator.Send(new GetClientCommentsQuery(id)));
 
     [HttpPost]
+    [Authorize(Roles = $"{Roles.Admin},{Roles.Supervisor},{Roles.Editor}")]
     public async Task<ActionResult<int>> Create(CreateClientCommand command)
         => Ok(await _mediator.Send(command));
 

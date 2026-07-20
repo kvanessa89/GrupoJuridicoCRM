@@ -27,9 +27,32 @@ public static class ClientScope
                 .Select(u => u.Id)
                 .ToListAsync(cancellationToken);
 
-            return query.Where(c => teamIds.Contains(c.OwnerId));
+            return query.Where(c => c.OwnerId == currentUser.UserId || teamIds.Contains(c.OwnerId));
         }
 
         return query;
+    }
+
+    // Autorización a nivel de comando (move/editar/comentar/eliminar/crear): admin y editor sin
+    // restricción, asesor solo sus propios clientes, supervisor los suyos o los de sus asesores.
+    public static async Task<bool> CanAccessAsync(
+        Guid ownerId,
+        ICurrentUserService currentUser,
+        IApplicationDbContext context,
+        CancellationToken cancellationToken)
+    {
+        if (currentUser.Roles.Contains(Roles.Admin) || currentUser.Roles.Contains(Roles.Editor))
+            return true;
+
+        if (currentUser.Roles.Contains(Roles.Asesor))
+            return ownerId == currentUser.UserId;
+
+        if (currentUser.Roles.Contains(Roles.Supervisor))
+        {
+            if (ownerId == currentUser.UserId) return true;
+            return await context.Users.AnyAsync(u => u.Id == ownerId && u.SupervisorId == currentUser.UserId, cancellationToken);
+        }
+
+        return false;
     }
 }

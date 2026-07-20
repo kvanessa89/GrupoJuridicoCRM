@@ -16,14 +16,22 @@ public record MoveClientCommand : IRequest
 public class MoveClientCommandHandler : IRequestHandler<MoveClientCommand>
 {
     private readonly IApplicationDbContext _context;
+    private readonly ICurrentUserService _currentUser;
 
-    public MoveClientCommandHandler(IApplicationDbContext context) => _context = context;
+    public MoveClientCommandHandler(IApplicationDbContext context, ICurrentUserService currentUser)
+    {
+        _context = context;
+        _currentUser = currentUser;
+    }
 
     public async Task Handle(MoveClientCommand request, CancellationToken cancellationToken)
     {
         var client = await _context.Clients
             .FirstOrDefaultAsync(c => c.Id == request.ClientId, cancellationToken)
             ?? throw new KeyNotFoundException($"Cliente {request.ClientId} no encontrado.");
+
+        if (!await ClientScope.CanAccessAsync(client.OwnerId, _currentUser, _context, cancellationToken))
+            throw new UnauthorizedAccessException("No tienes permiso para mover este cliente.");
 
         if (client.StageId == request.NewStageId) return;
 
