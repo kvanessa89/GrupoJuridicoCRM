@@ -1,6 +1,6 @@
 import { Fragment, useMemo, useState } from 'react';
 import { useAuth } from '../auth/AuthContext';
-import { canFilterTeam, isEditor } from '../auth/roles';
+import { canFilterTeam, isAdmin, isEditor } from '../auth/roles';
 import { useClientsQuery, useStageHistoryQuery } from '../clients/useClients';
 import { useStagesQuery } from '../stages/stagesApi';
 import { useSourcesQuery } from '../sources/sourcesApi';
@@ -35,9 +35,10 @@ export function PanelPage() {
   const stagesQuery = useStagesQuery();
   const sourcesQuery = useSourcesQuery();
   const usersQuery = useUsersQuery();
-  const boardSnapshotsQuery = useBoardSnapshotsQuery();
+  const canViewReports = !!user && isAdmin(user.role);
+  const boardSnapshotsQuery = useBoardSnapshotsQuery(canViewReports);
   const generateSnapshot = useGenerateBoardSnapshotMutation();
-  const cohortMonthsQuery = useCohortMonthsQuery();
+  const cohortMonthsQuery = useCohortMonthsQuery(canViewReports);
 
   const [filterId, setFilterId] = useState<string>('all');
   const [selectedMonth, setSelectedMonth] = useState<string | null>(null);
@@ -46,7 +47,7 @@ export function PanelPage() {
 
   const cohortMonths = cohortMonthsQuery.data ?? [];
   const activeMonth = selectedMonth ?? cohortMonths[0] ?? null;
-  const cohortSnapshotsQuery = useCohortBoardSnapshotsQuery(activeMonth);
+  const cohortSnapshotsQuery = useCohortBoardSnapshotsQuery(activeMonth, canViewReports);
 
   const clients = clientsQuery.data ?? [];
   const stageHistory = stageHistoryQuery.data ?? [];
@@ -261,6 +262,7 @@ export function PanelPage() {
         </div>
       )}
 
+      {canViewReports && (
       <div className="panel-section">
         <div className="panel-card">
           <div className="panel-card-title panel-card-title--lg">Reportes del tablero</div>
@@ -330,6 +332,7 @@ export function PanelPage() {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 }

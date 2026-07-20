@@ -6,9 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GrupoJuridico.Crm.Api.Controllers;
 
+// Reportes del tablero: solo el administrador puede verlos y generarlos.
 [ApiController]
 [Route("[controller]")]
-[Authorize]
+[Authorize(Roles = Roles.Admin)]
 public class BoardSnapshotsController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -19,7 +20,6 @@ public class BoardSnapshotsController : ControllerBase
         => Ok(await _mediator.Send(new GetBoardSnapshotsQuery()));
 
     [HttpPost]
-    [Authorize(Roles = $"{Roles.Admin},{Roles.Supervisor}")]
     public async Task<ActionResult<int>> Generate()
         => Ok(await _mediator.Send(new GenerateBoardSnapshotCommand()));
 

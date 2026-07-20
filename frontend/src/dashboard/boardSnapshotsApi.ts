@@ -18,8 +18,8 @@ function getCohortBoardSnapshots(month: string) {
   return httpClient.get<BoardSnapshot[]>('/boardsnapshots/cohort', { params: { month } }).then((res) => res.data);
 }
 
-export function useBoardSnapshotsQuery() {
-  return useQuery({ queryKey: ['board-snapshots'], queryFn: getBoardSnapshots });
+export function useBoardSnapshotsQuery(enabled = true) {
+  return useQuery({ queryKey: ['board-snapshots'], queryFn: getBoardSnapshots, enabled });
 }
 
 export function useGenerateBoardSnapshotMutation() {
@@ -30,15 +30,15 @@ export function useGenerateBoardSnapshotMutation() {
   });
 }
 
-export function useCohortMonthsQuery() {
-  return useQuery({ queryKey: ['board-snapshots-cohort-months'], queryFn: getCohortMonths });
+export function useCohortMonthsQuery(enabled = true) {
+  return useQuery({ queryKey: ['board-snapshots-cohort-months'], queryFn: getCohortMonths, enabled });
 }
 
-export function useCohortBoardSnapshotsQuery(month: string | null) {
+export function useCohortBoardSnapshotsQuery(month: string | null, enabled = true) {
   return useQuery({
     queryKey: ['board-snapshots-cohort', month],
     queryFn: () => getCohortBoardSnapshots(month!),
-    enabled: !!month,
+    enabled: enabled && !!month,
     // Mantiene el gráfico del mes anterior visible mientras carga el nuevo — si no,
     // `data` queda undefined entre queries, el gráfico cae al estado vacío, el div
     // del plot se desmonta, y al recibir los datos se remonta con el ancho por

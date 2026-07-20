@@ -1,3 +1,4 @@
+using GrupoJuridico.Crm.Application.Clients;
 using GrupoJuridico.Crm.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -16,14 +17,23 @@ public record SetClientBoardVisibilityCommand : IRequest
 public class SetClientBoardVisibilityCommandHandler : IRequestHandler<SetClientBoardVisibilityCommand>
 {
     private readonly IApplicationDbContext _context;
+    private readonly ICurrentUserService _currentUser;
 
-    public SetClientBoardVisibilityCommandHandler(IApplicationDbContext context) => _context = context;
+    public SetClientBoardVisibilityCommandHandler(IApplicationDbContext context, ICurrentUserService currentUser)
+    {
+        _context = context;
+        _currentUser = currentUser;
+    }
 
     public async Task Handle(SetClientBoardVisibilityCommand request, CancellationToken cancellationToken)
     {
         var client = await _context.Clients
             .FirstOrDefaultAsync(c => c.Id == request.ClientId, cancellationToken)
             ?? throw new KeyNotFoundException($"Cliente {request.ClientId} no encontrado.");
+
+        // Admin sin restricción; supervisor solo con sus propios clientes o los de sus asesores.
+        if (!await ClientScope.CanAccessAsync(client.OwnerId, _currentUser, _context, cancellationToken))
+            throw new UnauthorizedAccessException("No tienes permiso para ocultar/restaurar este cliente del tablero.");
 
         if (request.Hidden)
         {
