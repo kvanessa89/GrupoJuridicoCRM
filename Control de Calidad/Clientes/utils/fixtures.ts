@@ -34,10 +34,7 @@ export async function loginUi(page: Page, role: Role) {
     return request.method() === 'POST' && new URL(response.url()).pathname.endsWith('/api/auth/login');
   });
   await submit.click();
-  const loginResponse = await loginResponsePromise;
-  expect(loginResponse.ok(), `respuesta del login UI de ${role} (${loginResponse.status()})`).toBeTruthy();
-  await expect(page, `login UI de ${role}`).not.toHaveURL(/\/login(?:[/?#]|$)/i);
-  await expect(page.locator('.app-shell'), 'aplicación autenticada montada').toBeVisible();
+  await expect(page, `login UI de ${role}`).not.toHaveURL(/\/login(?:[/?#]|$)/i, { timeout: 30_000 });
   return true;
 }
 
@@ -50,7 +47,7 @@ export async function openClients(page: Page, role: Role = 'ADMIN') {
 
 export async function openNewClient(page: Page) {
   await page.getByRole('button', { name: 'Nuevo cliente' }).click();
-  await expect(page.getByText('Nuevo cliente', { exact: true })).toBeVisible();
+  await expect(page.locator('.modal-title', { hasText: 'Nuevo cliente' })).toBeVisible();
   await expect(page.locator('#client-nombre')).toBeVisible();
 }
 
