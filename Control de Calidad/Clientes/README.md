@@ -122,18 +122,4 @@ credenciales del rol requerido. Si el clic o la autenticación fallan, el result
 será `failed` (no `skipped`) y el reporte indicará si no encontró el botón o si la
 aplicación permaneció en `/login`.
 
-Las imágenes del login no determinan si la autenticación terminó. Después del clic,
-la suite espera la respuesta `POST /api/auth/login`, comprueba que sea exitosa y
-espera que `.app-shell` esté visible. Solo entonces navega a `/clientes` y espera la
-página del módulo. Esto evita continuar mientras React todavía está montando la
-interfaz autenticada. Para diagnosticar `CP-01` visualmente ejecute:
-
-```bat
-npx playwright test --grep "CP-01" --headed --trace on
-```
-
-Si falla, el mensaje distinguirá entre una respuesta HTTP de login no exitosa, la
-aplicación autenticada que no llegó a montarse y la página de Clientes que no se
-mostró.
-
 La suite puede crear clientes o comentarios. Ejecútela en un ambiente de QA controlado; no ejecute pruebas destructivas contra producción sin autorización y respaldo.
