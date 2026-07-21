@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import './utils/load-env';
 
 export default defineConfig({
   testDir: './tests',
@@ -7,7 +8,7 @@ export default defineConfig({
   fullyParallel: false,
   forbidOnly: true,
   retries: process.env.CI ? 2 : 0,
-  reporter: process.env.CI ? [['html', { open: 'never' }], ['github']] : 'list',
+  reporter: process.env.CI ? [['html', { open: 'never' }], ['github']] : [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL: process.env.CRM_BASE_URL ?? 'https://kiubco-001-site2.ltempurl.com',
     trace: 'retain-on-failure',

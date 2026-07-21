@@ -10,12 +10,10 @@ npm install
 npx playwright install chromium
 cp .env.example .env
 set -a; source .env; set +a
-npm test
-
+./run-playwright.sh all
 ```
 
 Las credenciales no se guardan en Git. `CRM_ADMIN_*` habilita el recorrido principal. Los casos de permisos/scope se omiten explícitamente hasta configurar las cuentas de cada rol y `CRM_FOREIGN_CLIENT_ID`/`CRM_FOREIGN_OWNER_ID`. El cliente foráneo debe estar fuera del equipo del Supervisor/Asesor utilizado.
-
 
 ## Ejecución guiada
 
@@ -82,12 +80,46 @@ Si PowerShell bloquea scripts locales, habilite únicamente esta sesión y vuelv
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ```
 
-## Comandos
-
+## Comandos npm
 
 - `npm run test:browser`: casos browser.
 - `npm run test:request`: casos request/seguridad.
 - `npm run test:list`: inventario sin ejecutar.
+- `npm run report`: abre el reporte HTML de la última ejecución.
 - `npx playwright test --grep "CP-27b"`: un caso por ID.
+
+## Credenciales en CMD y casos omitidos
+
+`findstr` únicamente demuestra que los valores existen dentro de `.env`; CMD no
+convierte ese archivo en variables de entorno por sí mismo. La configuración actual
+carga `.env` automáticamente antes de registrar las pruebas, tanto con los runners
+como al ejecutar `npm test` directamente.
+
+Si se usa una copia anterior y el resultado sigue siendo `87 skipped, 3 passed`, se
+puede cargar el archivo manualmente en la ventana actual de CMD y volver a ejecutar:
+
+```bat
+for /f "usebackq eol=# tokens=1,* delims==" %A in (".env") do @set "%A=%B"
+if defined CRM_ADMIN_EMAIL (echo Credenciales Admin cargadas) else (echo ERROR: credenciales no cargadas)
+npx playwright test --reporter=list,html
+npx playwright show-report playwright-report
+```
+
+Los tres casos que no necesitan autenticación pueden pasar aunque las credenciales
+no estén cargadas; los casos que requieren un rol se omiten deliberadamente si sus
+variables están ausentes. Los casos exclusivos de Asesor, Supervisor o Editor
+seguirán omitidos hasta configurar las credenciales correspondientes de
+`.env.example`.
+
+En CMD se escribe `%A`; dentro de un archivo `.cmd` debe escribirse `%%A`. Para ver
+la razón exacta de cada omisión, abra el reporte con `npm run report`.
+
+El helper de navegador sí completa correo y contraseña y después hace clic en
+**Iniciar sesión**. Además espera que la aplicación abandone `/login` antes de abrir
+Clientes. Por tanto, un caso marcado `skipped` no fue omitido por faltar el clic:
+Playwright muestra `skipped` antes de intentar el login cuando no encuentra las
+credenciales del rol requerido. Si el clic o la autenticación fallan, el resultado
+será `failed` (no `skipped`) y el reporte indicará si no encontró el botón o si la
+aplicación permaneció en `/login`.
 
 La suite puede crear clientes o comentarios. Ejecútela en un ambiente de QA controlado; no ejecute pruebas destructivas contra producción sin autorización y respaldo.

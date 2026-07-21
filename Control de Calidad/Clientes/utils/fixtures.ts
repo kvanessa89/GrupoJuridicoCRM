@@ -18,10 +18,18 @@ export async function loginUi(page: Page, role: Role) {
   const c = credentials(role);
   if (!c.email || !c.password) return false;
   await page.goto('/login');
-  await page.locator('#login-email').fill(c.email);
-  await page.locator('#login-password').fill(c.password);
-  await page.getByRole('button', { name: 'Iniciar sesión' }).click();
-  await expect(page).not.toHaveURL(/login/);
+  const email = page.locator('#login-email');
+  const password = page.locator('#login-password');
+  const submit = page.getByRole('button', { name: /iniciar sesi[oó]n/i });
+
+  await expect(email, 'campo de correo del login').toBeVisible();
+  await expect(password, 'campo de contraseña del login').toBeVisible();
+  await email.fill(c.email);
+  await password.fill(c.password);
+  await expect(submit, 'botón Iniciar sesión').toBeVisible();
+  await expect(submit, 'botón Iniciar sesión').toBeEnabled();
+  await submit.click();
+  await expect(page, `login UI de ${role}`).not.toHaveURL(/\/login(?:[/?#]|$)/i);
   return true;
 }
 
