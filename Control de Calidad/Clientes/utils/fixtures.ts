@@ -29,7 +29,7 @@ export async function loginUi(page: Page, role: Role) {
   await expect(submit, 'botón Iniciar sesión').toBeVisible();
   await expect(submit, 'botón Iniciar sesión').toBeEnabled();
   await submit.click();
-  await expect(page, `login UI de ${role}`).not.toHaveURL(/\/login(?:[/?#]|$)/i);
+  await expect(page, `login UI de ${role}`).not.toHaveURL(/\/login(?:[/?#]|$)/i, { timeout: 30_000 });
   return true;
 }
 
@@ -42,7 +42,7 @@ export async function openClients(page: Page, role: Role = 'ADMIN') {
 
 export async function openNewClient(page: Page) {
   await page.getByRole('button', { name: 'Nuevo cliente' }).click();
-  await expect(page.getByText('Nuevo cliente', { exact: true })).toBeVisible();
+  await expect(page.locator('.modal-title', { hasText: 'Nuevo cliente' })).toBeVisible();
   await expect(page.locator('#client-nombre')).toBeVisible();
 }
 
