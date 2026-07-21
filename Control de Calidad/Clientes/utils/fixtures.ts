@@ -28,6 +28,11 @@ export async function loginUi(page: Page, role: Role) {
   await password.fill(c.password);
   await expect(submit, 'botón Iniciar sesión').toBeVisible();
   await expect(submit, 'botón Iniciar sesión').toBeEnabled();
+
+  const loginResponsePromise = page.waitForResponse((response) => {
+    const request = response.request();
+    return request.method() === 'POST' && new URL(response.url()).pathname.endsWith('/api/auth/login');
+  });
   await submit.click();
   await expect(page, `login UI de ${role}`).not.toHaveURL(/\/login(?:[/?#]|$)/i, { timeout: 30_000 });
   return true;
@@ -35,7 +40,7 @@ export async function loginUi(page: Page, role: Role) {
 
 export async function openClients(page: Page, role: Role = 'ADMIN') {
   if (!(await loginUi(page, role))) return false;
-  await page.goto('/clientes');
+  await page.goto('/clientes', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('.clients-page')).toBeVisible();
   return true;
 }
