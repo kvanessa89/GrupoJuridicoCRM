@@ -1,0 +1,11 @@
+{
+  "name": "grupo-juridico-clientes-e2e",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:browser": "playwright test tests/clientes.browser.spec.ts",
+    "test:request": "playwright test tests/clientes.request.spec.ts",
+    "test:list": "playwright test --list"
+  },
+  "devDependencies": { "@playwright/test": "^1.54.1", "typescript": "^5.8.3" }
+}
