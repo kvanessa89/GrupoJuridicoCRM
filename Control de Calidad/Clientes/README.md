@@ -10,10 +10,12 @@ npm install
 npx playwright install chromium
 cp .env.example .env
 set -a; source .env; set +a
-./run-playwright.sh all
+npm test
+
 ```
 
 Las credenciales no se guardan en Git. `CRM_ADMIN_*` habilita el recorrido principal. Los casos de permisos/scope se omiten explícitamente hasta configurar las cuentas de cada rol y `CRM_FOREIGN_CLIENT_ID`/`CRM_FOREIGN_OWNER_ID`. El cliente foráneo debe estar fuera del equipo del Supervisor/Asesor utilizado.
+
 
 ## Ejecución guiada
 
@@ -80,7 +82,8 @@ Si PowerShell bloquea scripts locales, habilite únicamente esta sesión y vuelv
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 ```
 
-## Comandos npm
+## Comandos
+
 
 - `npm run test:browser`: casos browser.
 - `npm run test:request`: casos request/seguridad.
